@@ -65,7 +65,7 @@ ${data.skills.join(', ')}
   };
 
   return (
-    <div className="flex flex-col h-full bg-slate-200/70 border-l border-slate-300">
+    <div className="flex flex-col h-full bg-desk-surface border-l border-slate-300 relative">
       {/* Top Preview Control Bar (Hidden when printing) */}
       <div className="no-print bg-white/95 backdrop-blur-md px-4 py-2.5 border-b border-slate-200 flex flex-wrap items-center justify-between gap-3 sticky top-0 z-20 shadow-xs">
         {/* ATS Score quick badge */}
@@ -132,7 +132,7 @@ ${data.skills.join(', ')}
       {/* Sheet Preview Container with zoom scale */}
       <div className="flex-1 overflow-auto p-4 md:p-8 flex justify-center items-start">
         <div 
-          className="transition-transform duration-150 origin-top shadow-2xl print:shadow-none print:transform-none"
+          className="transition-transform duration-150 origin-top shadow-[0_25px_60px_-15px_rgba(100,70,20,0.25)] ring-2 ring-white/90 rounded-xs print:shadow-none print:transform-none print:ring-0"
           style={{ transform: `scale(${zoom / 100})` }}
         >
           {renderTemplate()}

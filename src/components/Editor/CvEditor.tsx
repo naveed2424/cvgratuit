@@ -12,7 +12,7 @@ import { CoverLetterView } from '../CoverLetter/CoverLetterView';
 import { AtsCheckerModal, calculateAtsScore } from '../AtsChecker/AtsCheckerModal';
 import { 
   User, Briefcase, GraduationCap, Award, Languages, Palette, 
-  Sparkles, FileText, Download, Upload, RotateCcw, Check, ChevronLeft, Eye
+  Sparkles, FileText, Download, Upload, RotateCcw, Check, ChevronLeft, Eye, Building2
 } from 'lucide-react';
 
 interface Props {
@@ -160,6 +160,10 @@ export const CvEditor: React.FC<Props> = ({ data, onChange, onBackToHome }) => {
             <span className="text-[10px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full">
               Éditeur en direct
             </span>
+            <div className="hidden xl:flex items-center gap-1.5 text-[11px] text-slate-500 bg-slate-50 border border-slate-200 px-2 py-0.5 rounded-md font-mono">
+              <Building2 className="w-3 h-3 text-slate-400" />
+              <span>Poste de travail A4 actif</span>
+            </div>
           </div>
         </div>
 

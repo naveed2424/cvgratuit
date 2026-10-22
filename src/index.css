@@ -4,6 +4,7 @@
   html {
     scroll-behavior: smooth;
     font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background-color: #f7f1e5;
   }
 }
 
@@ -19,6 +20,59 @@
 }
 .font-mono-cv {
   font-family: 'JetBrains Mono', monospace;
+}
+
+/* Champagne Backgrounds & Architectural Workspace Patterns */
+.bg-champagne-light {
+  background-color: #faf5ec;
+}
+
+.bg-champagne-base {
+  background-color: #f6efe2;
+}
+
+.bg-champagne-rich {
+  background-color: #efe3ce;
+}
+
+.bg-champagne-gradient {
+  background: linear-gradient(135deg, #fdfbf7 0%, #f7f1e5 50%, #eee1cb 100%);
+}
+
+.bg-office-grid-champagne {
+  background-image: 
+    linear-gradient(to right, rgba(180, 142, 85, 0.16) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(180, 142, 85, 0.16) 1px, transparent 1px);
+  background-size: 36px 36px;
+}
+
+.bg-office-dots-champagne {
+  background-image: radial-gradient(rgba(180, 142, 85, 0.28) 1.5px, transparent 1.5px);
+  background-size: 24px 24px;
+}
+
+/* Luxury Champagne Executive Desk Surface for Resume Preview */
+.bg-desk-surface {
+  background-color: #f4ecdf;
+  background-image: 
+    radial-gradient(at 100% 0%, rgba(254, 243, 199, 0.6) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(238, 225, 203, 0.8) 0px, transparent 60%),
+    linear-gradient(to right, rgba(180, 142, 85, 0.16) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(180, 142, 85, 0.16) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 36px 36px, 36px 36px;
+}
+
+/* Brilliant, Flashy Pure White Elements (High Contrast Against Champagne) */
+.card-flashy-white {
+  background-color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 10px 25px -3px rgba(120, 80, 20, 0.08), 0 4px 6px -2px rgba(120, 80, 20, 0.04);
+}
+
+.card-flashy-white-hero {
+  background-color: #ffffff;
+  border: 2px solid #ffffff;
+  box-shadow: 0 20px 40px -10px rgba(160, 110, 40, 0.15), 0 0 0 1px rgba(217, 170, 90, 0.25);
 }
 
 /* A4 Sheet Dimensions for high-fidelity resume preview */

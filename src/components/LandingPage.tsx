@@ -5,7 +5,8 @@ import { TESTIMONIALS, FAQ_ITEMS, RECRUITER_BRANDS, EEAT_CREDENTIALS } from '../
 import { JobPreset, TemplateId } from '../types/resume';
 import { 
   Sparkles, CheckCircle2, ArrowRight, Star, ShieldCheck, Download, 
-  FileText, Palette, Users, ChevronRight, ChevronDown, Check, Zap, Eye
+  FileText, Palette, Users, ChevronRight, ChevronDown, Check, Zap, Eye,
+  Building2, Laptop, Monitor, Briefcase, MessageSquare
 } from 'lucide-react';
 
 interface Props {
@@ -14,6 +15,7 @@ interface Props {
   onSelectTemplate: (templateId: TemplateId) => void;
   onOpenLetter: () => void;
   onOpenAtsChecker: () => void;
+  onOpenComments: () => void;
 }
 
 export const LandingPage: React.FC<Props> = ({
@@ -22,6 +24,7 @@ export const LandingPage: React.FC<Props> = ({
   onSelectTemplate,
   onOpenLetter,
   onOpenAtsChecker,
+  onOpenComments,
 }) => {
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
   const [selectedLanguage, setSelectedLanguage] = useState('FR');
@@ -47,12 +50,18 @@ export const LandingPage: React.FC<Props> = ({
           </div>
 
           {/* Nav links */}
-          <nav className="hidden md:flex items-center gap-6 text-sm font-semibold text-slate-600">
+          <nav className="hidden md:flex items-center gap-5 text-sm font-semibold text-slate-600">
             <a href="#modeles" className="hover:text-blue-600 transition">Modèles de CV</a>
             <a href="#metiers" className="hover:text-blue-600 transition">Exemples par métier</a>
             <a href="#etapes" className="hover:text-blue-600 transition">Comment ça marche</a>
             <a href="#ats-checker" className="hover:text-blue-600 transition">ATS Checker</a>
-            <a href="#avis" className="hover:text-blue-600 transition">Avis</a>
+            <button 
+              onClick={onOpenComments}
+              className="hover:text-blue-600 transition cursor-pointer flex items-center gap-1.5 font-semibold text-slate-600"
+            >
+              <span>Avis & Témoignages</span>
+              <span className="text-[10px] bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded-full font-bold">★ 4.9</span>
+            </button>
             <a href="#faq" className="hover:text-blue-600 transition">FAQ</a>
           </nav>
 
@@ -75,14 +84,48 @@ export const LandingPage: React.FC<Props> = ({
         </div>
       </header>
 
-      {/* 2. Hero Section (Inspiration MakeMyCV page 1) */}
-      <section className="relative overflow-hidden pt-8 pb-16 md:pt-14 md:pb-24 bg-gradient-to-b from-blue-50/60 via-white to-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* 2. Hero Section (Inspiration MakeMyCV with warm Champagne background and brilliant flashy white card) */}
+      <section className="relative overflow-hidden pt-8 pb-16 md:pt-14 md:pb-24 bg-gradient-to-b from-[#f7f1e5] via-[#faf5ec] to-[#f4ebe0]">
+        {/* Clearly Visible Modern Glass Office, Building & Computer Workspace Backdrop in Champagne Glow */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden select-none">
+          {/* Luminous modern high-tech office building and computer desks with warm champagne tone */}
+          <img
+            src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?w=1920&auto=format&fit=crop&q=80"
+            alt="Bureau moderne et ordinateurs de travail"
+            className="w-full h-full object-cover object-center opacity-30 mix-blend-multiply filter contrast-125 sepia-[0.25]"
+          />
+          {/* Modern office building glass facade subtle overlay on right side */}
+          <div 
+            className="absolute top-0 right-0 w-1/2 h-full opacity-20 bg-cover bg-no-repeat bg-right"
+            style={{
+              backgroundImage: `url('https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&auto=format&fit=crop&q=80')`
+            }}
+          ></div>
+
+          {/* Soft architectural blueprint grid in warm champagne gold */}
+          <div className="absolute inset-0 bg-office-grid-champagne opacity-80"></div>
+
+          {/* Light champagne gradient mask ensuring all headings and buttons remain 100% legible */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#fbf8f2]/90 via-[#faf5eb]/80 to-[#f6efe2]/60"></div>
+
+          {/* Visible architectural badges */}
+          <div className="absolute top-6 right-10 hidden xl:flex items-center gap-2 text-xs font-semibold text-amber-900 bg-white/95 backdrop-blur-md border border-amber-300/80 px-3.5 py-1.5 rounded-full shadow-md">
+            <Building2 className="w-4 h-4 text-amber-600" />
+            <span>Tour d'affaires & Espace RH certifié</span>
+          </div>
+
+          <div className="absolute bottom-8 left-10 hidden xl:flex items-center gap-2 text-xs font-semibold text-amber-900 bg-white/95 backdrop-blur-md border border-amber-300/80 px-3.5 py-1.5 rounded-full shadow-md">
+            <Laptop className="w-4 h-4 text-amber-700" />
+            <span>Postes informatiques de test ATS</span>
+          </div>
+        </div>
+
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             {/* Left Column (Hero Text) */}
             <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
-              {/* Trust Badge with Avatars */}
-              <div className="inline-flex items-center gap-3 bg-white border border-slate-200 shadow-2xs px-3.5 py-1.5 rounded-full">
+              {/* Trust Badge with Avatars in Brilliant White */}
+              <div className="inline-flex items-center gap-3 bg-white border border-amber-200/80 shadow-md px-3.5 py-1.5 rounded-full">
                 <div className="flex -space-x-2">
                   <img className="inline-block h-6 w-6 rounded-full ring-2 ring-white object-cover" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=60&auto=format&fit=crop&q=80" alt="Utilisateur" />
                   <img className="inline-block h-6 w-6 rounded-full ring-2 ring-white object-cover" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&auto=format&fit=crop&q=80" alt="Utilisateur" />
@@ -97,11 +140,11 @@ export const LandingPage: React.FC<Props> = ({
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-slate-900 leading-[1.15]">
                 Créez un CV parfait <br />
                 en quelques minutes <br />
-                <span className="text-blue-600 underline decoration-blue-200 decoration-wavy">grâce à l'IA</span>
+                <span className="text-blue-600 underline decoration-amber-300 decoration-wavy">grâce à l'IA</span>
               </h1>
 
               {/* Subtitle */}
-              <p className="text-base sm:text-lg text-slate-600 max-w-xl mx-auto lg:mx-0 leading-relaxed">
+              <p className="text-base sm:text-lg text-slate-700 max-w-xl mx-auto lg:mx-0 leading-relaxed font-medium">
                 Créez un CV percutant grâce à nos modèles approuvés par les recruteurs et notre assistant intelligent. <strong>100% gratuit</strong>, sans abonnement caché, téléchargement PDF direct.
               </p>
 
@@ -117,15 +160,15 @@ export const LandingPage: React.FC<Props> = ({
 
                 <a
                   href="#metiers"
-                  className="px-6 py-3.5 bg-white hover:bg-slate-50 text-slate-700 font-bold text-base rounded-xl border border-slate-300 shadow-xs hover:border-slate-400 transition flex items-center justify-center gap-2"
+                  className="px-6 py-3.5 bg-white hover:bg-amber-50/50 text-slate-800 font-bold text-base rounded-xl border border-amber-300/80 shadow-sm hover:border-amber-400 transition flex items-center justify-center gap-2"
                 >
-                  <FileText className="w-5 h-5 text-slate-400" />
+                  <FileText className="w-5 h-5 text-amber-600" />
                   <span>Choisir un exemple par métier</span>
                 </a>
               </div>
 
               {/* Trustpilot Review Strip */}
-              <div className="pt-3 flex flex-wrap items-center justify-center lg:justify-start gap-3 text-xs text-slate-600">
+              <div className="pt-3 flex flex-wrap items-center justify-center lg:justify-start gap-3 text-xs text-slate-700">
                 <span className="font-extrabold text-slate-900 tracking-wide">EXCELLENT</span>
                 <div className="flex gap-0.5">
                   {[...Array(5)].map((_, i) => (
@@ -138,14 +181,14 @@ export const LandingPage: React.FC<Props> = ({
               </div>
             </div>
 
-            {/* Right Column (Hero Visual Mockup inspired by PDF page 1) */}
+            {/* Right Column (Hero Visual Mockup in Flashy Brilliant White) */}
             <div className="lg:col-span-5 relative flex justify-center">
               <div className="relative w-full max-w-md">
-                {/* Decorative background glow */}
-                <div className="absolute -inset-1.5 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-2xl blur-lg opacity-25"></div>
+                {/* Decorative background glow in amber/blue */}
+                <div className="absolute -inset-1.5 bg-gradient-to-r from-amber-400 to-blue-500 rounded-2xl blur-lg opacity-35"></div>
 
-                {/* Main Resume Card Mockup */}
-                <div className="relative bg-white rounded-2xl border border-slate-200 shadow-2xl p-5 overflow-hidden">
+                {/* Main Resume Card Mockup in Pure Brilliant Flashy White */}
+                <div className="relative card-flashy-white-hero bg-white rounded-2xl p-6 overflow-hidden">
                   {/* Floating AI Assistant pill */}
                   <div className="absolute top-4 right-4 bg-slate-900 text-white text-xs font-semibold px-3 py-1.5 rounded-full shadow-lg flex items-center gap-1.5 animate-pulse">
                     <Sparkles className="w-3.5 h-3.5 text-blue-400" />
@@ -237,19 +280,23 @@ export const LandingPage: React.FC<Props> = ({
         </div>
       </section>
 
-      {/* 4. "Créez votre CV en 4 étapes" (PDF Page 1) */}
-      <section id="etapes" className="py-20 bg-slate-50">
+      {/* 4. "Créez votre CV en 4 étapes" (PDF Page 1) in Champagne & Flashy White */}
+      <section id="etapes" className="py-20 bg-[#f6efe2] bg-office-grid-champagne relative border-t border-amber-200/60">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-100/80 text-amber-900 text-xs font-bold mb-3 border border-amber-300/60 shadow-2xs">
+            <span>Processus rapide & 100% sans frais</span>
+          </div>
+
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-slate-900 tracking-tight">
             Créez votre CV en 4 étapes simples
           </h2>
-          <p className="mt-2 text-sm sm:text-base text-slate-600 max-w-2xl mx-auto">
+          <p className="mt-2 text-sm sm:text-base text-slate-700 max-w-2xl mx-auto font-medium">
             Un processus fluide, intuitif et sans barrière financière pour concevoir une candidature gagnante.
           </p>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-12 text-left">
             {/* Étape 1 */}
-            <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs hover:shadow-md transition relative flex flex-col justify-between">
+            <div className="bg-white p-6 rounded-2xl border-2 border-white ring-1 ring-amber-300/40 shadow-lg hover:shadow-xl transition relative flex flex-col justify-between">
               <div>
                 <div className="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 font-bold flex items-center justify-center text-sm mb-4">
                   01
@@ -267,7 +314,7 @@ export const LandingPage: React.FC<Props> = ({
             </div>
 
             {/* Étape 2 */}
-            <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs hover:shadow-md transition relative flex flex-col justify-between">
+            <div className="bg-white p-6 rounded-2xl border-2 border-white ring-1 ring-amber-300/40 shadow-lg hover:shadow-xl transition relative flex flex-col justify-between">
               <div>
                 <div className="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 font-bold flex items-center justify-center text-sm mb-4">
                   02
@@ -285,7 +332,7 @@ export const LandingPage: React.FC<Props> = ({
             </div>
 
             {/* Étape 3 */}
-            <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs hover:shadow-md transition relative flex flex-col justify-between">
+            <div className="bg-white p-6 rounded-2xl border-2 border-white ring-1 ring-amber-300/40 shadow-lg hover:shadow-xl transition relative flex flex-col justify-between">
               <div>
                 <div className="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 font-bold flex items-center justify-center text-sm mb-4">
                   03
@@ -303,7 +350,7 @@ export const LandingPage: React.FC<Props> = ({
             </div>
 
             {/* Étape 4 */}
-            <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs hover:shadow-md transition relative flex flex-col justify-between">
+            <div className="bg-white p-6 rounded-2xl border-2 border-white ring-1 ring-amber-300/40 shadow-lg hover:shadow-xl transition relative flex flex-col justify-between">
               <div>
                 <div className="w-10 h-10 rounded-xl bg-blue-100 text-blue-700 font-bold flex items-center justify-center text-sm mb-4">
                   04
@@ -498,14 +545,14 @@ export const LandingPage: React.FC<Props> = ({
         </div>
       </section>
 
-      {/* 7. "Bibliothèque d'exemples par métier" (#metiers) */}
-      <section id="metiers" className="py-20 bg-slate-50 border-t border-slate-200">
+      {/* 7. "Bibliothèque d'exemples par métier" (#metiers) in Champagne & Flashy White */}
+      <section id="metiers" className="py-20 bg-[#f7f1e5] bg-office-dots-champagne border-t border-amber-200/60">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-12">
             <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
               Exemples de CV rédigés par métier
             </h2>
-            <p className="mt-2 text-sm text-slate-600">
+            <p className="mt-2 text-sm text-slate-700 font-medium">
               Cliquez sur un métier pour charger un modèle complet pré-rempli avec des réalisations chiffrées et compétences ciblées.
             </p>
           </div>
@@ -518,7 +565,7 @@ export const LandingPage: React.FC<Props> = ({
                   onSelectJobPreset(preset);
                   onStartCreating();
                 }}
-                className="bg-white p-5 rounded-xl border border-slate-200 hover:border-blue-500 hover:shadow-md transition cursor-pointer group flex flex-col justify-between"
+                className="bg-white p-5 rounded-2xl border-2 border-white ring-1 ring-amber-300/40 hover:ring-blue-400 shadow-md hover:shadow-xl transition cursor-pointer group flex flex-col justify-between"
               >
                 <div>
                   <span className="text-[10px] font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded">
@@ -622,25 +669,25 @@ export const LandingPage: React.FC<Props> = ({
         </div>
       </section>
 
-      {/* 9. Avis Utilisateurs (Trustpilot Reviews - PDF Page 3) */}
-      <section id="avis" className="py-20 bg-slate-50 border-t border-slate-200">
+      {/* 9. Avis Utilisateurs (Trustpilot Reviews - PDF Page 3) in Champagne & Flashy White */}
+      <section id="avis" className="py-20 bg-[#f5ede1] bg-office-grid-champagne border-t border-amber-200/60">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-xl mx-auto mb-12">
-            <div className="inline-flex items-center gap-1 text-emerald-600 font-bold text-xs mb-2">
-              <Star className="w-4 h-4 fill-emerald-500" />
+            <div className="inline-flex items-center gap-1 text-amber-900 bg-amber-100/90 border border-amber-300/60 px-3 py-1 rounded-full font-bold text-xs mb-2 shadow-2xs">
+              <Star className="w-4 h-4 fill-amber-500 text-amber-500" />
               <span>4.9 / 5 sur plus de 14 000 avis certifiés</span>
             </div>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
               Ce que disent nos candidats
             </h2>
-            <p className="mt-1 text-sm text-slate-600">
+            <p className="mt-1 text-sm text-slate-700 font-medium">
               Des milliers de professionnels ont décroché leur nouvel emploi grâce à CVGratuit.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {TESTIMONIALS.map((t) => (
-              <div key={t.id} className="bg-white p-6 rounded-2xl border border-slate-200 shadow-2xs flex flex-col justify-between">
+              <div key={t.id} className="bg-white p-6 rounded-2xl border-2 border-white ring-1 ring-amber-300/40 shadow-lg hover:shadow-xl flex flex-col justify-between">
                 <div>
                   <div className="flex gap-0.5 text-emerald-500 mb-3">
                     {[...Array(t.rating)].map((_, i) => (
@@ -662,6 +709,17 @@ export const LandingPage: React.FC<Props> = ({
                 </div>
               </div>
             ))}
+          </div>
+
+          <div className="text-center mt-10">
+            <button
+              onClick={onOpenComments}
+              className="px-6 py-3.5 bg-white border-2 border-blue-600 hover:bg-blue-600 text-blue-700 hover:text-white font-bold text-xs sm:text-sm rounded-xl shadow-xs transition inline-flex items-center gap-2 cursor-pointer"
+            >
+              <MessageSquare className="w-4 h-4" />
+              <span>Consulter tous les avis et laisser un commentaire</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
           </div>
         </div>
       </section>
@@ -795,6 +853,7 @@ export const LandingPage: React.FC<Props> = ({
                 <li><button onClick={onStartCreating} className="hover:text-white transition">Créateur de CV</button></li>
                 <li><button onClick={onOpenLetter} className="hover:text-white transition">Créateur de lettre de motivation</button></li>
                 <li><button onClick={onOpenAtsChecker} className="hover:text-white transition">Vérificateur de score ATS</button></li>
+                <li><button onClick={onOpenComments} className="hover:text-white transition">Avis & Commentaires utilisateurs</button></li>
                 <li><a href="#metiers" className="hover:text-white transition">Exemples de CV par métier</a></li>
                 <li><a href="#modeles" className="hover:text-white transition">Modèles de CV professionnels</a></li>
               </ul>
