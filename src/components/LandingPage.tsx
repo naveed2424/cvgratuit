@@ -6,7 +6,7 @@ import { JobPreset, TemplateId } from '../types/resume';
 import { 
   Sparkles, CheckCircle2, ArrowRight, Star, ShieldCheck, Download, 
   FileText, Palette, Users, ChevronRight, ChevronDown, Check, Zap, Eye,
-  Building2, Laptop, Monitor, Briefcase, MessageSquare
+  Building2, Laptop, Monitor, Briefcase, MessageSquare, Globe, Terminal, Cpu, Code
 } from 'lucide-react';
 
 interface Props {
@@ -62,7 +62,10 @@ export const LandingPage: React.FC<Props> = ({
               className="hover:text-blue-600 transition cursor-pointer flex items-center gap-1.5 font-semibold text-slate-600"
             >
               <span>Avis</span>
-              <span className="text-[10px] bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded-full font-bold">★ 4.9</span>
+              <span className="text-[10px] bg-amber-100 text-amber-900 px-2 py-0.5 rounded-full font-bold flex items-center gap-1">
+                <Star className="w-2.5 h-2.5 fill-amber-500 text-amber-500" />
+                <span>4.9/5</span>
+              </span>
             </button>
             <button
               onClick={onOpenAbout}
@@ -77,7 +80,8 @@ export const LandingPage: React.FC<Props> = ({
           <div className="flex items-center gap-3">
             <div className="relative inline-block text-left text-xs font-semibold text-slate-700 bg-slate-100 px-2.5 py-1.5 rounded-lg border border-slate-200">
               <span className="flex items-center gap-1.5 cursor-pointer">
-                <span>🇫🇷 {selectedLanguage}</span>
+                <Globe className="w-3.5 h-3.5 text-slate-500" />
+                <span>FR</span>
               </span>
             </div>
 
@@ -743,52 +747,63 @@ export const LandingPage: React.FC<Props> = ({
         </div>
       </section>
 
-      {/* 9bis. À propos du Fondateur : Naveed Afzal & L'éthique du 100% gratuit */}
+      {/* 9bis. À propos du Fondateur : Naveed Afzal & L'engagement du 100% gratuit */}
       <section className="py-16 bg-[#fbf8f2] bg-office-grid-champagne border-t border-amber-200/60">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white border-2 border-white ring-1 ring-amber-300/60 rounded-3xl p-6 sm:p-10 shadow-xl flex flex-col lg:flex-row items-center gap-8">
             <div className="w-full lg:w-1/3 flex justify-center">
-              <div className="relative group cursor-pointer" onClick={onOpenAbout}>
-                <div className="absolute -inset-1.5 bg-gradient-to-r from-amber-400 to-blue-500 rounded-2xl blur-xs opacity-40 group-hover:opacity-75 transition"></div>
-                <div className="relative rounded-2xl overflow-hidden border-2 border-white shadow-xl bg-white max-w-[260px]">
-                  <img
-                    src="/assets/aistudio/Portfolio_technologique_et_m_ditatif_de_Naveed_Afzal_4cd849be.png"
-                    onError={(e) => {
-                      (e.target as HTMLImageElement).src = '/public/assets/aistudio/Portfolio_technologique_et_m_ditatif_de_Naveed_Afzal_4cd849be.png';
-                    }}
-                    alt="Naveed Afzal - Fondateur de CVGratuit"
-                    className="w-full h-auto object-cover max-h-[300px] object-top"
-                  />
-                  <div className="p-3 text-center bg-white border-t border-amber-100">
-                    <p className="text-xs font-bold text-slate-900">Naveed Afzal</p>
-                    <p className="text-[11px] text-amber-800">Technologiste & Créateur Solidaire</p>
+              <div className="w-full max-w-[280px] p-6 rounded-2xl bg-slate-900 text-white shadow-xl space-y-4">
+                <div className="flex items-center gap-3 border-b border-slate-800 pb-3">
+                  <div className="w-10 h-10 rounded-xl bg-blue-600 text-white flex items-center justify-center font-bold">
+                    <Terminal className="w-5 h-5" />
                   </div>
+                  <div>
+                    <p className="text-xs font-bold text-white">Naveed Afzal</p>
+                    <p className="text-[10px] text-blue-400">Ingénieur & Fondateur</p>
+                  </div>
+                </div>
+                <div className="space-y-2 text-[11px] text-slate-300">
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                    <span>20+ ans d'expérience web</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                    <span>Téléchargement PDF 100% libre</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+                    <span>Sans abonnement ni frais cachés</span>
+                  </div>
+                </div>
+                <div className="pt-2 border-t border-slate-800 text-[10px] text-slate-400">
+                  Projet indépendant développé en France pour soutenir l'emploi.
                 </div>
               </div>
             </div>
 
             <div className="w-full lg:w-2/3 space-y-4 text-left">
-              <div className="inline-flex items-center gap-2 bg-amber-100 text-amber-900 text-xs font-bold px-3 py-1 rounded-full border border-amber-300 shadow-2xs">
-                <Sparkles className="w-3.5 h-3.5 text-amber-600" />
-                <span>Pourquoi ce site est 100% gratuit ? L'éthique de notre créateur</span>
+              <div className="inline-flex items-center gap-2 bg-blue-50 text-blue-900 text-xs font-bold px-3 py-1 rounded-full border border-blue-200 shadow-2xs">
+                <ShieldCheck className="w-3.5 h-3.5 text-blue-600" />
+                <span>Pourquoi ce site est 100% gratuit ? L'engagement de son créateur</span>
               </div>
               <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-                « La technologie n'a de valeur que si elle libère et aide les autres. »
+                « La technologie doit simplifier la vie des gens, pas leur imposer des abonnements cachés. »
               </h3>
               <p className="text-sm text-slate-700 leading-relaxed font-medium">
-                Fort de plus de 20 ans d'expérience dans l'ingénierie web et les technologies numériques, <strong>Naveed Afzal</strong> a fondé <strong>CVGratuit</strong> avec une promesse ferme : bannir les abonnements abusifs et frais surprises qui pénalisent les demandeurs d'emploi. L'intégralité du site et des téléchargements PDF demeure libre et gratuite.
+                Fort de plus de 20 ans d'expérience dans l'ingénierie web et le développement de plateformes logicielles, <strong>Naveed Afzal</strong> a créé <strong>CVGratuit</strong> avec un objectif clair : offrir à chaque candidat un outil professionnel complet, conforme aux exigences des recruteurs, sans aucun frais de téléchargement PDF ni engagement bancaire.
               </p>
               <div className="flex flex-wrap gap-3 pt-2">
                 <button
                   onClick={onOpenAbout}
                   className="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs sm:text-sm font-bold rounded-xl shadow-md transition inline-flex items-center gap-2 cursor-pointer"
                 >
-                  <span>Découvrir le parcours & portfolio du fondateur</span>
+                  <span>En savoir plus sur nos engagements</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
                 <button
                   onClick={onStartCreating}
-                  className="px-5 py-2.5 bg-white hover:bg-amber-50 text-slate-800 text-xs sm:text-sm font-bold rounded-xl border border-amber-300 shadow-xs transition cursor-pointer"
+                  className="px-5 py-2.5 bg-white hover:bg-slate-50 text-slate-800 text-xs sm:text-sm font-bold rounded-xl border border-slate-300 shadow-xs transition cursor-pointer"
                 >
                   <span>Créer mon CV maintenant</span>
                 </button>
@@ -953,7 +968,7 @@ export const LandingPage: React.FC<Props> = ({
                 Informations & Fondateur
               </h4>
               <ul className="space-y-2 text-[11px]">
-                <li><button onClick={onOpenAbout} className="hover:text-white transition text-left cursor-pointer font-semibold text-amber-200">Parcours de Naveed Afzal (Portfolio)</button></li>
+                <li><button onClick={onOpenAbout} className="hover:text-white transition text-left cursor-pointer font-semibold text-amber-200">Engagements de Naveed Afzal (20+ ans tech)</button></li>
                 <li><button onClick={onOpenAbout} className="hover:text-white transition text-left cursor-pointer">Notre mission & éthique solidaire</button></li>
                 <li><span>Données stockées localement (RGPD)</span></li>
                 <li><span>Sans filigrane publicitaire</span></li>
