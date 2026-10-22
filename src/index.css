@@ -1,0 +1,74 @@
+@import "tailwindcss";
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  }
+}
+
+/* Font classes for CV customization */
+.font-sans-cv {
+  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+}
+.font-serif-cv {
+  font-family: 'Merriweather', Georgia, serif;
+}
+.font-display-cv {
+  font-family: 'Playfair Display', Georgia, serif;
+}
+.font-mono-cv {
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* A4 Sheet Dimensions for high-fidelity resume preview */
+.a4-sheet {
+  width: 210mm;
+  min-height: 297mm;
+  box-sizing: border-box;
+}
+
+@media screen and (max-width: 1024px) {
+  .a4-preview-scale {
+    transform-origin: top center;
+  }
+}
+
+/* Print Styles for flawless browser PDF export */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+
+  .print-only {
+    display: block !important;
+  }
+
+  .a4-sheet {
+    width: 210mm !important;
+    min-height: 297mm !important;
+    margin: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+    page-break-after: auto;
+  }
+
+  .cv-item-break {
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+}

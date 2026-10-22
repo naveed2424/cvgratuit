@@ -1,0 +1,6 @@
+{
+  "name": "CVGratuit - Créateur de CV en Ligne Gratuit & Modèles Professionnels",
+  "description": "Créez votre CV professionnel en ligne gratuitement en quelques minutes. Modèles français optimisés ATS, suggestions par métier, export PDF immédiat sans inscription.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

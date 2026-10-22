@@ -1,0 +1,15 @@
+# CVGratuit.fr - Créateur de CV en Ligne Gratuit & Conforme ATS
+
+> CVGratuit est une plateforme web 100% gratuite, sans inscription obligatoire et sans filigrane, conçue pour permettre à chaque candidat francophone (France, Belgique, Suisse, Québec) de concevoir un curriculum vitae moderne, percutant et validé par les recruteurs.
+
+## Fonctionnalités Principales
+- **Éditeur de CV en direct** : Personnalisation instantanée des couleurs, polices, marges, disposition (1 ou 2 colonnes), avec ou sans photo.
+- **6 Thèmes Professionnels** : Moderne Cobalt, Élégant Noir & Or, Minimaliste Épuré, Créatif Émeraude, Compact Tech, Classique Exécutif.
+- **Exemples par Métier Pré-remplis** : Plus de 10 métiers phares du marché de l'emploi français (Développeur Web, Conseiller de Vente / Retail, Infirmier(ère) / Soins, Chargé de Marketing Digital, Assistant Administratif, Serveur / Hôtellerie-Restauration, Commercial B2B, Comptable, Chauffeur / Logistique, Enseignant).
+- **Assistance Rédactionnelle IA & ATS** : Générateur d'accroches professionnelles, verbes d'action percutants, suggestions de compétences clés et optimisation pour les logiciels de tri automatique (ATS - Applicant Tracking Systems).
+- **Export PDF direct** : Génération de PDF haute fidélité au format A4 sans abonnement caché ni carte bancaire. Export/Import JSON pour sauvegarder et modifier ultérieurement en toute confidentialité (respect RGPD, données stockées localement dans votre navigateur).
+- **Générateur de Lettre de Motivation Assortie** : Création d'une lettre personnalisée avec le même style graphique que le CV.
+- **Vérificateur de Score CV (ATS Checker)** : Analyse en temps réel de la complétude du CV et recommandations concrètes d'experts RH.
+
+## Engagement E-E-A-T & Qualité
+Les contenus, structures et conseils de CVGratuit sont élaborés conformément aux pratiques des cabinets de recrutement français, des normes France Travail et de l'APEC.
