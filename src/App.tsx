@@ -10,6 +10,7 @@ import { LandingPage } from './components/LandingPage';
 import { CvEditor } from './components/Editor/CvEditor';
 import { AtsCheckerModal } from './components/AtsChecker/AtsCheckerModal';
 import { CommentsPage } from './components/CommentsPage';
+import { AboutPage } from './components/AboutPage';
 
 const STORAGE_KEY = 'cvgratuit_user_resume_v1';
 
@@ -135,7 +136,7 @@ const DEFAULT_RESUME_DATA: ResumeData = {
 };
 
 export default function App() {
-  const [view, setView] = useState<'landing' | 'editor' | 'comments'>('landing');
+  const [view, setView] = useState<'landing' | 'editor' | 'comments' | 'about'>('landing');
   const [resumeData, setResumeData] = useState<ResumeData>(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
@@ -193,9 +194,15 @@ export default function App() {
           onOpenLetter={() => setView('editor')}
           onOpenAtsChecker={() => setIsAtsModalOpen(true)}
           onOpenComments={() => setView('comments')}
+          onOpenAbout={() => setView('about')}
         />
       ) : view === 'comments' ? (
         <CommentsPage
+          onBackToHome={() => setView('landing')}
+          onStartCreating={() => setView('editor')}
+        />
+      ) : view === 'about' ? (
+        <AboutPage
           onBackToHome={() => setView('landing')}
           onStartCreating={() => setView('editor')}
         />

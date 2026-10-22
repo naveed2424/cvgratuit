@@ -16,6 +16,7 @@ interface Props {
   onOpenLetter: () => void;
   onOpenAtsChecker: () => void;
   onOpenComments: () => void;
+  onOpenAbout: () => void;
 }
 
 export const LandingPage: React.FC<Props> = ({
@@ -25,6 +26,7 @@ export const LandingPage: React.FC<Props> = ({
   onOpenLetter,
   onOpenAtsChecker,
   onOpenComments,
+  onOpenAbout,
 }) => {
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
   const [selectedLanguage, setSelectedLanguage] = useState('FR');
@@ -59,8 +61,14 @@ export const LandingPage: React.FC<Props> = ({
               onClick={onOpenComments}
               className="hover:text-blue-600 transition cursor-pointer flex items-center gap-1.5 font-semibold text-slate-600"
             >
-              <span>Avis & Témoignages</span>
+              <span>Avis</span>
               <span className="text-[10px] bg-amber-100 text-amber-800 px-1.5 py-0.5 rounded-full font-bold">★ 4.9</span>
+            </button>
+            <button
+              onClick={onOpenAbout}
+              className="hover:text-blue-600 transition cursor-pointer font-semibold text-slate-600 flex items-center gap-1"
+            >
+              <span>À propos & Fondateur</span>
             </button>
             <a href="#faq" className="hover:text-blue-600 transition">FAQ</a>
           </nav>
@@ -124,16 +132,27 @@ export const LandingPage: React.FC<Props> = ({
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             {/* Left Column (Hero Text) */}
             <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
-              {/* Trust Badge with Avatars in Brilliant White */}
-              <div className="inline-flex items-center gap-3 bg-white border border-amber-200/80 shadow-md px-3.5 py-1.5 rounded-full">
-                <div className="flex -space-x-2">
-                  <img className="inline-block h-6 w-6 rounded-full ring-2 ring-white object-cover" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=60&auto=format&fit=crop&q=80" alt="Utilisateur" />
-                  <img className="inline-block h-6 w-6 rounded-full ring-2 ring-white object-cover" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&auto=format&fit=crop&q=80" alt="Utilisateur" />
-                  <img className="inline-block h-6 w-6 rounded-full ring-2 ring-white object-cover" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&auto=format&fit=crop&q=80" alt="Utilisateur" />
+              {/* Trust Badge and Founder Mission Badge */}
+              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-2.5">
+                <div className="inline-flex items-center gap-3 bg-white border border-amber-200/80 shadow-md px-3.5 py-1.5 rounded-full">
+                  <div className="flex -space-x-2">
+                    <img className="inline-block h-6 w-6 rounded-full ring-2 ring-white object-cover" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=60&auto=format&fit=crop&q=80" alt="Utilisateur" />
+                    <img className="inline-block h-6 w-6 rounded-full ring-2 ring-white object-cover" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&auto=format&fit=crop&q=80" alt="Utilisateur" />
+                    <img className="inline-block h-6 w-6 rounded-full ring-2 ring-white object-cover" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=60&auto=format&fit=crop&q=80" alt="Utilisateur" />
+                  </div>
+                  <span className="text-xs font-bold text-slate-800">
+                    +1 million d'utilisateurs satisfaits
+                  </span>
                 </div>
-                <span className="text-xs font-bold text-slate-800">
-                  +1 million d'utilisateurs satisfaits
-                </span>
+
+                <button
+                  onClick={onOpenAbout}
+                  className="inline-flex items-center gap-1.5 bg-amber-50 hover:bg-amber-100/80 border border-amber-300 text-amber-900 font-bold text-xs px-3.5 py-1.5 rounded-full shadow-xs transition cursor-pointer"
+                >
+                  <Sparkles className="w-3.5 h-3.5 text-amber-600" />
+                  <span>Initié par Naveed Afzal (20+ ans tech)</span>
+                  <span className="text-[10px] text-amber-700 underline ml-0.5">Notre histoire →</span>
+                </button>
               </div>
 
               {/* H1 Title */}
@@ -724,6 +743,61 @@ export const LandingPage: React.FC<Props> = ({
         </div>
       </section>
 
+      {/* 9bis. À propos du Fondateur : Naveed Afzal & L'éthique du 100% gratuit */}
+      <section className="py-16 bg-[#fbf8f2] bg-office-grid-champagne border-t border-amber-200/60">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-white border-2 border-white ring-1 ring-amber-300/60 rounded-3xl p-6 sm:p-10 shadow-xl flex flex-col lg:flex-row items-center gap-8">
+            <div className="w-full lg:w-1/3 flex justify-center">
+              <div className="relative group cursor-pointer" onClick={onOpenAbout}>
+                <div className="absolute -inset-1.5 bg-gradient-to-r from-amber-400 to-blue-500 rounded-2xl blur-xs opacity-40 group-hover:opacity-75 transition"></div>
+                <div className="relative rounded-2xl overflow-hidden border-2 border-white shadow-xl bg-white max-w-[260px]">
+                  <img
+                    src="/assets/aistudio/Portfolio_technologique_et_m_ditatif_de_Naveed_Afzal_4cd849be.png"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = '/public/assets/aistudio/Portfolio_technologique_et_m_ditatif_de_Naveed_Afzal_4cd849be.png';
+                    }}
+                    alt="Naveed Afzal - Fondateur de CVGratuit"
+                    className="w-full h-auto object-cover max-h-[300px] object-top"
+                  />
+                  <div className="p-3 text-center bg-white border-t border-amber-100">
+                    <p className="text-xs font-bold text-slate-900">Naveed Afzal</p>
+                    <p className="text-[11px] text-amber-800">Technologiste & Créateur Solidaire</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div className="w-full lg:w-2/3 space-y-4 text-left">
+              <div className="inline-flex items-center gap-2 bg-amber-100 text-amber-900 text-xs font-bold px-3 py-1 rounded-full border border-amber-300 shadow-2xs">
+                <Sparkles className="w-3.5 h-3.5 text-amber-600" />
+                <span>Pourquoi ce site est 100% gratuit ? L'éthique de notre créateur</span>
+              </div>
+              <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
+                « La technologie n'a de valeur que si elle libère et aide les autres. »
+              </h3>
+              <p className="text-sm text-slate-700 leading-relaxed font-medium">
+                Fort de plus de 20 ans d'expérience dans l'ingénierie web et les technologies numériques, <strong>Naveed Afzal</strong> a fondé <strong>CVGratuit</strong> avec une promesse ferme : bannir les abonnements abusifs et frais surprises qui pénalisent les demandeurs d'emploi. L'intégralité du site et des téléchargements PDF demeure libre et gratuite.
+              </p>
+              <div className="flex flex-wrap gap-3 pt-2">
+                <button
+                  onClick={onOpenAbout}
+                  className="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs sm:text-sm font-bold rounded-xl shadow-md transition inline-flex items-center gap-2 cursor-pointer"
+                >
+                  <span>Découvrir le parcours & portfolio du fondateur</span>
+                  <ArrowRight className="w-4 h-4" />
+                </button>
+                <button
+                  onClick={onStartCreating}
+                  className="px-5 py-2.5 bg-white hover:bg-amber-50 text-slate-800 text-xs sm:text-sm font-bold rounded-xl border border-amber-300 shadow-xs transition cursor-pointer"
+                >
+                  <span>Créer mon CV maintenant</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* 10. E-E-A-T Guide : Conseils d'Experts RH pour le marché français */}
       <section id="guide-eeat" className="py-20 bg-white border-t border-slate-200">
         <div className="max-w-4xl mx-auto px-4 sm:px-6">
@@ -850,10 +924,11 @@ export const LandingPage: React.FC<Props> = ({
                 Toutes les fonctionnalités
               </h4>
               <ul className="space-y-2 text-[11px]">
-                <li><button onClick={onStartCreating} className="hover:text-white transition">Créateur de CV</button></li>
-                <li><button onClick={onOpenLetter} className="hover:text-white transition">Créateur de lettre de motivation</button></li>
-                <li><button onClick={onOpenAtsChecker} className="hover:text-white transition">Vérificateur de score ATS</button></li>
-                <li><button onClick={onOpenComments} className="hover:text-white transition">Avis & Commentaires utilisateurs</button></li>
+                <li><button onClick={onStartCreating} className="hover:text-white transition cursor-pointer">Créateur de CV</button></li>
+                <li><button onClick={onOpenLetter} className="hover:text-white transition cursor-pointer">Créateur de lettre de motivation</button></li>
+                <li><button onClick={onOpenAtsChecker} className="hover:text-white transition cursor-pointer">Vérificateur de score ATS</button></li>
+                <li><button onClick={onOpenComments} className="hover:text-white transition cursor-pointer">Avis & Commentaires utilisateurs</button></li>
+                <li><button onClick={onOpenAbout} className="hover:text-white transition cursor-pointer font-bold text-amber-300">À propos du Fondateur</button></li>
                 <li><a href="#metiers" className="hover:text-white transition">Exemples de CV par métier</a></li>
                 <li><a href="#modeles" className="hover:text-white transition">Modèles de CV professionnels</a></li>
               </ul>
@@ -875,9 +950,11 @@ export const LandingPage: React.FC<Props> = ({
             {/* Col 4 */}
             <div>
               <h4 className="font-bold text-white text-xs uppercase tracking-wider mb-3">
-                Informations & Légal
+                Informations & Fondateur
               </h4>
               <ul className="space-y-2 text-[11px]">
+                <li><button onClick={onOpenAbout} className="hover:text-white transition text-left cursor-pointer font-semibold text-amber-200">Parcours de Naveed Afzal (Portfolio)</button></li>
+                <li><button onClick={onOpenAbout} className="hover:text-white transition text-left cursor-pointer">Notre mission & éthique solidaire</button></li>
                 <li><span>Données stockées localement (RGPD)</span></li>
                 <li><span>Sans filigrane publicitaire</span></li>
                 <li><span>Sans abonnement ni carte bancaire</span></li>
