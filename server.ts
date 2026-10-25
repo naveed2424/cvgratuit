@@ -87,6 +87,23 @@ function getFrenchFallback(type?: string, jobTitle?: string, currentText?: strin
   return `Suggestions professionnelles validées par nos recruteurs pour ${job}.`;
 }
 
+// Explicit endpoints for Google Search Console verification file
+app.get('/googleAI5M8f3ekFXNXe6T0f9eKCjkJJY9777CITc5Sn0MQwg.html', (_req, res) => {
+  res.setHeader('Content-Type', 'text/html; charset=utf-8');
+  res.status(200).send('google-site-verification: googleAI5M8f3ekFXNXe6T0f9eKCjkJJY9777CITc5Sn0MQwg.html');
+});
+
+// Dynamic fallback for any Google verification code HTML file
+app.get('/google:code([a-zA-Z0-9_-]+).html', (req, res) => {
+  const code = req.params.code;
+  res.setHeader('Content-Type', 'text/html; charset=utf-8');
+  res.status(200).send(`google-site-verification: google${code}.html`);
+});
+
+// Serve public directory static files
+const publicPath = path.resolve(process.cwd(), 'public');
+app.use(express.static(publicPath));
+
 async function startServer() {
   if (process.env.NODE_ENV !== 'production') {
     const vite = await createViteServer({
