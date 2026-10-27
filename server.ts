@@ -73,6 +73,152 @@ Règles strictes :
   }
 });
 
+// API endpoint to generate complete 2000+ words SEO article for the French CV & Job blog
+app.post('/api/blog/generate-daily-article', async (req, res) => {
+  try {
+    const { topic, category } = req.body;
+    const cleanTopic = (topic || "L'impact de l'IA et du Recrutement en 2026").replace("{Write today's best and trending topic}", "L'impact de l'IA et des Nouveaux Baromètres de Salaires en France en 2026").trim();
+
+    if (process.env.GEMINI_API_KEY) {
+      const prompt = `Agis en journaliste professionnel, expert SEO et stratège de contenu pour le marché de l'emploi en France.
+Rédige un article de blog complet, approfondi et factuel sur le sujet tendance : "${cleanTopic}".
+Catégorie attribuée : ${category || 'tendances-salaires'}.
+Respecte scrupuleusement ces règles :
+1. Titre émotionnel à fort taux de clic (CTR).
+2. Meta Title (moins de 60 caractères) et Meta Description (150-160 caractères).
+3. Mot-clé principal naturel et 4 mots-clés secondaires.
+4. Introduction avec hook percutant, contexte et importance immédiate.
+5. 4 sections H2 et H3 détaillées avec données chiffrées, citations d'experts RH et impacts réels.
+6. 4 suggestions d'images in-content avec balises ALT SEO descriptives et notes d'emplacement.
+7. Encadré "Points Clés / Key Takeaways" (5 puces).
+8. Section FAQ (3 à 4 questions avec réponses claires).
+9. Maillage interne (liens vers le créateur de CV, vérificateur ATS, etc.) et sources externes (Insee, Dares, France Travail).
+10. Conclusion prospective et appel à l'action (CTA).
+Fournis la réponse au format JSON strict avec les champs :
+{
+  "title": string,
+  "metaTitle": string,
+  "metaDescription": string,
+  "primaryKeyword": string,
+  "secondaryKeywords": string[],
+  "intro": { "hook": string, "background": string, "importanceNow": string },
+  "keyTakeaways": string[],
+  "sections": [
+    {
+      "id": string,
+      "heading": string,
+      "subheading": string,
+      "content": string,
+      "callout": { "type": "stat"|"quote"|"tip", "title": string, "text": string, "source": string },
+      "bullets": string[],
+      "image": { "url": string, "alt": string, "caption": string, "placementNote": string }
+    }
+  ],
+  "faqs": [{ "question": string, "answer": string }],
+  "conclusion": { "summary": string, "futureOutlook": string, "ctaText": string, "ctaButton": string }
+}`;
+
+      const response = await ai.models.generateContent({
+        model: 'gemini-3.8-flash',
+        contents: prompt,
+        config: {
+          temperature: 0.7,
+          responseMimeType: 'application/json',
+        },
+      });
+
+      const parsed = JSON.parse(response.text || '{}');
+      if (parsed.title) {
+        const article = {
+          id: `art-ai-${Date.now()}`,
+          slug: parsed.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 60) + '-' + Date.now().toString().slice(-4),
+          title: parsed.title,
+          metaTitle: parsed.metaTitle || parsed.title,
+          metaDescription: parsed.metaDescription || parsed.title,
+          categoryId: category || 'tendances-salaires',
+          author: {
+            name: 'Naveed Afzal & Rédaction IA Quotidienne',
+            role: 'Analyste Recrutement & Stratégie SEO',
+            avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=200&auto=format&fit=crop&q=80',
+          },
+          publishDate: "Aujourd'hui",
+          lastUpdated: "À l'instant",
+          readingTime: '9 min de lecture',
+          wordCount: 2260,
+          primaryKeyword: parsed.primaryKeyword || cleanTopic,
+          secondaryKeywords: parsed.secondaryKeywords || ['recrutement', 'cv', 'emploi france'],
+          isFeatured: true,
+          isTrending: true,
+          views: 1,
+          likes: 0,
+          featuredImage: {
+            url: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&auto=format&fit=crop&q=80',
+            alt: `Visuel principal header pour l'article sur ${cleanTopic}`,
+            caption: `Figure Header : Analyse d'actualité et perspectives sur ${cleanTopic}.`,
+            placementNote: 'Image mise en avant en haut d\'article',
+          },
+          intro: parsed.intro,
+          keyTakeaways: parsed.keyTakeaways || [],
+          sections: (parsed.sections || []).map((sec: any, idx: number) => ({
+            ...sec,
+            image: sec.image?.url ? sec.image : {
+              url: [
+                'https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=1000&auto=format&fit=crop&q=80',
+                'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=1000&auto=format&fit=crop&q=80',
+                'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=1000&auto=format&fit=crop&q=80',
+                'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=1000&auto=format&fit=crop&q=80',
+              ][idx % 4],
+              alt: sec.image?.alt || `Graphique et illustration RH pour la section ${idx + 1}`,
+              caption: sec.image?.caption || `Figure ${idx + 1} : Représentation opérationnelle.`,
+              placementNote: `Visuel in-content de la section ${idx + 1}`,
+            }
+          })),
+          faqs: parsed.faqs || [],
+          internalLinks: [
+            {
+              text: 'Créer un CV adapté avec nos modèles gratuits',
+              targetView: 'editor',
+              context: 'Appliquez ces principes sur un modèle approuvé par les recruteurs.',
+            },
+            {
+              text: 'Vérifier la conformité de votre CV avec l\'audit ATS',
+              targetView: 'landing',
+              context: 'Testez la compatibilité machine de votre document.',
+            },
+          ],
+          externalSources: [
+            {
+              title: 'Données statistiques France Travail',
+              url: 'https://www.francetravail.fr/',
+              authoritativeOrg: 'France Travail',
+              citationContext: 'Rapports et tendances sur l\'emploi en France.',
+            },
+            {
+              title: 'Baromètre Apec du Recrutement',
+              url: 'https://corporate.apec.fr/',
+              authoritativeOrg: 'Apec',
+              citationContext: 'Enquêtes auprès des directions des ressources humaines.',
+            },
+          ],
+          conclusion: parsed.conclusion || {
+            summary: 'Une opportunité stratégique pour valoriser ses compétences.',
+            futureOutlook: 'Une dynamique porteuse pour les candidats préparés.',
+            ctaText: 'Prêt à valoriser vos compétences ? Créez votre CV gratuit dès aujourd\'hui.',
+            ctaButton: 'Créer mon CV gratuit',
+          },
+        };
+        return res.json({ article });
+      }
+    }
+    // If no key or parsing failed, return null to let client fallback take over smoothly
+    return res.json({ article: null });
+  } catch (err) {
+    console.error('Error generating daily article:', err);
+    return res.json({ article: null });
+  }
+});
+
+
 function getFrenchFallback(type?: string, jobTitle?: string, currentText?: string): string {
   const job = jobTitle || 'Professionnel passionné';
   if (type === 'summary') {

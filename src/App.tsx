@@ -5,14 +5,23 @@
 
 import React, { useState, useEffect } from 'react';
 import { ResumeData, JobPreset, TemplateId } from './types/resume';
-import { JOB_PRESETS } from './data/jobPresets';
+import { BlogPost } from './types/blog';
+import { INITIAL_BLOG_POSTS } from './data/blogData';
 import { LandingPage } from './components/LandingPage';
 import { CvEditor } from './components/Editor/CvEditor';
 import { AtsCheckerModal } from './components/AtsChecker/AtsCheckerModal';
 import { CommentsPage } from './components/CommentsPage';
 import { AboutPage } from './components/AboutPage';
+import { BlogHome } from './components/Blog/BlogHome';
+import { ArticleDetail } from './components/Blog/ArticleDetail';
+import { DailyTopicGeneratorModal } from './components/Blog/DailyTopicGeneratorModal';
+import { TermsPage } from './components/Legal/TermsPage';
+import { DisclaimerPage } from './components/Legal/DisclaimerPage';
+import { PrivacyPage } from './components/Legal/PrivacyPage';
+import { ContactPage } from './components/Contact/ContactPage';
 
 const STORAGE_KEY = 'cvgratuit_user_resume_v1';
+const BLOG_STORAGE_KEY = 'cvgratuit_blog_posts_v1';
 
 const DEFAULT_RESUME_DATA: ResumeData = {
   personalInfo: {
@@ -124,7 +133,7 @@ const DEFAULT_RESUME_DATA: ResumeData = {
     recipientName: 'Madame la Directrice des Ressources Humaines',
     recipientCompany: 'Boutique Maje & Sandro',
     recipientAddress: '75008 Paris',
-    date: '22 Octobre 2026',
+    date: '27 Octobre 2026',
     subject: 'Candidature au poste de Conseillère de Vente Senior',
     salutation: 'Madame, Monsieur',
     intro: 'Vivement intéressée par le rayonnement et l\'excellence de votre maison, je vous soumets avec enthousiasme ma candidature pour le poste de Conseillère de Vente Senior.',
@@ -135,26 +144,81 @@ const DEFAULT_RESUME_DATA: ResumeData = {
   }
 };
 
+export type AppView = 
+  | 'landing' 
+  | 'editor' 
+  | 'comments' 
+  | 'about' 
+  | 'blog' 
+  | 'article' 
+  | 'terms' 
+  | 'disclaimer' 
+  | 'privacy' 
+  | 'contact';
+
 export default function App() {
-  const [view, setView] = useState<'landing' | 'editor' | 'comments' | 'about'>('landing');
+  const [view, setView] = useState<AppView>('blog'); // Default to blog as requested
   const [resumeData, setResumeData] = useState<ResumeData>(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) {
-        return JSON.parse(saved);
-      }
+      if (saved) return JSON.parse(saved);
     } catch {}
     return DEFAULT_RESUME_DATA;
   });
 
-  const [isAtsModalOpen, setIsAtsModalOpen] = useState(false);
+  // Blog posts storage
+  const [blogPosts, setBlogPosts] = useState<BlogPost[]>(() => {
+    try {
+      const saved = localStorage.getItem(BLOG_STORAGE_KEY);
+      if (saved) {
+        const parsed = JSON.parse(saved);
+        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+      }
+    } catch {}
+    return INITIAL_BLOG_POSTS;
+  });
 
-  // Auto-save to localStorage
+  const [selectedArticle, setSelectedArticle] = useState<BlogPost>(blogPosts[0]);
+  const [isAtsModalOpen, setIsAtsModalOpen] = useState(false);
+  const [isGeneratorModalOpen, setIsGeneratorModalOpen] = useState(false);
+
+  // Auto-save resume data
   useEffect(() => {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(resumeData));
     } catch {}
   }, [resumeData]);
+
+  // Auto-save blog posts
+  useEffect(() => {
+    try {
+      localStorage.setItem(BLOG_STORAGE_KEY, JSON.stringify(blogPosts));
+    } catch {}
+  }, [blogPosts]);
+
+  // Track page views in Google Analytics (gtag.js with official ID G-ZM8R2JF6WT)
+  useEffect(() => {
+    if (typeof window !== 'undefined' && typeof (window as any).gtag === 'function') {
+      const pageTitleMap: Record<AppView, string> = {
+        landing: 'Accueil - Créateur de CV Gratuit',
+        editor: 'Éditeur de CV en Ligne',
+        comments: 'Avis Utilisateurs & Témoignages',
+        about: 'À Propos de CVGratuit & Fondateur',
+        blog: 'Le Mag Emploi & Carrière - Blog CV & Recrutement',
+        article: selectedArticle ? selectedArticle.title : 'Article de Blog',
+        terms: 'Conditions Générales d\'Utilisation (CGU)',
+        disclaimer: 'Mentions Légales & Disclaimer',
+        privacy: 'Politique de Confidentialité & RGPD',
+        contact: 'Contact & Support Utilisateurs',
+      };
+
+      (window as any).gtag('event', 'page_view', {
+        page_title: pageTitleMap[view] || view,
+        page_location: window.location.href,
+        page_path: view === 'landing' ? '/' : `/${view}${view === 'article' ? `/${selectedArticle?.slug}` : ''}`,
+      });
+    }
+  }, [view, selectedArticle]);
 
   const handleSelectJobPreset = (preset: JobPreset) => {
     setResumeData(prev => ({
@@ -184,9 +248,94 @@ export default function App() {
     }));
   };
 
+  const handleOpenArticle = (article: BlogPost) => {
+    setSelectedArticle(article);
+    setView('article');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handlePublishNewArticle = (newArticle: BlogPost) => {
+    setBlogPosts(prev => [newArticle, ...prev]);
+    setSelectedArticle(newArticle);
+    setView('article');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (typeof window !== 'undefined' && typeof (window as any).gtag === 'function') {
+      (window as any).gtag('event', 'article_published', {
+        title: newArticle.title,
+        category: newArticle.categoryId,
+      });
+    }
+  };
+
   return (
     <div className="min-h-screen bg-[#f7f1e5] font-sans">
-      {view === 'landing' ? (
+      {view === 'blog' ? (
+        <BlogHome
+          posts={blogPosts}
+          onSelectArticle={handleOpenArticle}
+          onOpenGenerator={() => setIsGeneratorModalOpen(true)}
+          onBackToHome={() => setView('landing')}
+          onStartCreating={() => setView('editor')}
+          onOpenAbout={() => setView('about')}
+          onOpenContact={() => setView('contact')}
+          onOpenTerms={() => setView('terms')}
+          onOpenPrivacy={() => setView('privacy')}
+          onOpenDisclaimer={() => setView('disclaimer')}
+        />
+      ) : view === 'article' && selectedArticle ? (
+        <ArticleDetail
+          article={selectedArticle}
+          allPosts={blogPosts}
+          onBackToBlog={() => setView('blog')}
+          onSelectArticle={handleOpenArticle}
+          onStartCreating={() => setView('editor')}
+          onOpenAbout={() => setView('about')}
+          onOpenContact={() => setView('contact')}
+          onOpenTerms={() => setView('terms')}
+          onOpenPrivacy={() => setView('privacy')}
+          onOpenDisclaimer={() => setView('disclaimer')}
+        />
+      ) : view === 'terms' ? (
+        <TermsPage
+          onBackToHome={() => setView('landing')}
+          onOpenBlog={() => setView('blog')}
+          onStartCreating={() => setView('editor')}
+        />
+      ) : view === 'disclaimer' ? (
+        <DisclaimerPage
+          onBackToHome={() => setView('landing')}
+          onOpenBlog={() => setView('blog')}
+          onStartCreating={() => setView('editor')}
+        />
+      ) : view === 'privacy' ? (
+        <PrivacyPage
+          onBackToHome={() => setView('landing')}
+          onOpenBlog={() => setView('blog')}
+          onStartCreating={() => setView('editor')}
+        />
+      ) : view === 'contact' ? (
+        <ContactPage
+          onBackToHome={() => setView('landing')}
+          onOpenBlog={() => setView('blog')}
+          onStartCreating={() => setView('editor')}
+        />
+      ) : view === 'about' ? (
+        <AboutPage
+          onBackToHome={() => setView('landing')}
+          onStartCreating={() => setView('editor')}
+        />
+      ) : view === 'comments' ? (
+        <CommentsPage
+          onBackToHome={() => setView('landing')}
+          onStartCreating={() => setView('editor')}
+        />
+      ) : view === 'editor' ? (
+        <CvEditor
+          data={resumeData}
+          onChange={setResumeData}
+          onBackToHome={() => setView('landing')}
+        />
+      ) : (
         <LandingPage
           onStartCreating={() => setView('editor')}
           onSelectJobPreset={handleSelectJobPreset}
@@ -195,30 +344,26 @@ export default function App() {
           onOpenAtsChecker={() => setIsAtsModalOpen(true)}
           onOpenComments={() => setView('comments')}
           onOpenAbout={() => setView('about')}
-        />
-      ) : view === 'comments' ? (
-        <CommentsPage
-          onBackToHome={() => setView('landing')}
-          onStartCreating={() => setView('editor')}
-        />
-      ) : view === 'about' ? (
-        <AboutPage
-          onBackToHome={() => setView('landing')}
-          onStartCreating={() => setView('editor')}
-        />
-      ) : (
-        <CvEditor
-          data={resumeData}
-          onChange={setResumeData}
-          onBackToHome={() => setView('landing')}
+          onOpenBlog={() => setView('blog')}
+          onOpenTerms={() => setView('terms')}
+          onOpenPrivacy={() => setView('privacy')}
+          onOpenDisclaimer={() => setView('disclaimer')}
+          onOpenContact={() => setView('contact')}
         />
       )}
 
-      {/* Standalone ATS audit modal if triggered from landing page */}
+      {/* Standalone ATS audit modal if triggered */}
       <AtsCheckerModal
         isOpen={isAtsModalOpen}
         onClose={() => setIsAtsModalOpen(false)}
         data={resumeData}
+      />
+
+      {/* Daily Trending Topic Generator Modal */}
+      <DailyTopicGeneratorModal
+        isOpen={isGeneratorModalOpen}
+        onClose={() => setIsGeneratorModalOpen(false)}
+        onPublishArticle={handlePublishNewArticle}
       />
     </div>
   );

@@ -17,6 +17,11 @@ interface Props {
   onOpenAtsChecker: () => void;
   onOpenComments: () => void;
   onOpenAbout: () => void;
+  onOpenBlog?: () => void;
+  onOpenTerms?: () => void;
+  onOpenPrivacy?: () => void;
+  onOpenDisclaimer?: () => void;
+  onOpenContact?: () => void;
 }
 
 export const LandingPage: React.FC<Props> = ({
@@ -27,6 +32,11 @@ export const LandingPage: React.FC<Props> = ({
   onOpenAtsChecker,
   onOpenComments,
   onOpenAbout,
+  onOpenBlog,
+  onOpenTerms,
+  onOpenPrivacy,
+  onOpenDisclaimer,
+  onOpenContact,
 }) => {
   const [activeFaq, setActiveFaq] = useState<number | null>(null);
   const [selectedLanguage, setSelectedLanguage] = useState('FR');
@@ -53,6 +63,13 @@ export const LandingPage: React.FC<Props> = ({
 
           {/* Nav links */}
           <nav className="hidden md:flex items-center gap-5 text-sm font-semibold text-slate-600">
+            <button
+              onClick={onOpenBlog}
+              className="px-2.5 py-1 rounded-lg bg-amber-100 text-amber-900 hover:bg-amber-200 transition font-bold flex items-center gap-1.5 cursor-pointer"
+            >
+              <Sparkles className="w-3.5 h-3.5 text-amber-700" />
+              <span>Le Blog Emploi & 6 Catégories</span>
+            </button>
             <a href="#modeles" className="hover:text-blue-600 transition">Modèles de CV</a>
             <a href="#metiers" className="hover:text-blue-600 transition">Exemples par métier</a>
             <a href="#etapes" className="hover:text-blue-600 transition">Comment ça marche</a>
@@ -73,7 +90,12 @@ export const LandingPage: React.FC<Props> = ({
             >
               <span>À propos & Fondateur</span>
             </button>
-            <a href="#faq" className="hover:text-blue-600 transition">FAQ</a>
+            <button
+              onClick={onOpenContact}
+              className="hover:text-blue-600 transition cursor-pointer font-semibold text-slate-600"
+            >
+              Contact
+            </button>
           </nav>
 
           {/* Right: Language switch + CTA */}
@@ -979,11 +1001,13 @@ export const LandingPage: React.FC<Props> = ({
           </div>
 
           <div className="pt-8 border-t border-slate-900 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-slate-500">
-            <p>© 2026 CVGratuit.fr – Tous droits réservés.</p>
-            <div className="flex gap-4">
-              <span>Mentions légales</span>
-              <span>Politique de confidentialité</span>
-              <span>Conditions d'utilisation</span>
+            <p>© 2026 CVGratuit.fr – Tous droits réservés. Conforme aux règles Google AdSense & RGPD.</p>
+            <div className="flex flex-wrap gap-4">
+              <button onClick={onOpenBlog} className="hover:text-white transition cursor-pointer text-amber-300 font-bold">Le Blog Emploi (6 Catégories)</button>
+              <button onClick={onOpenDisclaimer} className="hover:text-white transition cursor-pointer">Mentions légales & Disclaimer</button>
+              <button onClick={onOpenPrivacy} className="hover:text-white transition cursor-pointer">Politique de confidentialité</button>
+              <button onClick={onOpenTerms} className="hover:text-white transition cursor-pointer">Conditions d'utilisation</button>
+              <button onClick={onOpenContact} className="hover:text-white transition cursor-pointer text-blue-400">Contact</button>
             </div>
           </div>
         </div>
