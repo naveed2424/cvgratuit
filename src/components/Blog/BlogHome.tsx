@@ -5,13 +5,16 @@ import { AdSenseSlot } from './AdSenseSlot';
 import { 
   Search, Sparkles, TrendingUp, Clock, Eye, 
   ArrowRight, FileText, Mail, Users, Compass, 
-  Share2, ArrowLeft, Star, ShieldCheck, CheckCircle2, ChevronRight 
+  Share2, ArrowLeft, Star, ShieldCheck, CheckCircle2, ChevronRight,
+  Calendar, Zap
 } from 'lucide-react';
 
 interface Props {
   posts: BlogPost[];
   onSelectArticle: (article: BlogPost) => void;
   onOpenGenerator: () => void;
+  onOpenScheduler?: () => void;
+  onOpenSocialKit?: (article: BlogPost) => void;
   onBackToHome: () => void;
   onStartCreating: () => void;
   onOpenAbout: () => void;
@@ -25,6 +28,8 @@ export const BlogHome: React.FC<Props> = ({
   posts,
   onSelectArticle,
   onOpenGenerator,
+  onOpenScheduler,
+  onOpenSocialKit,
   onBackToHome,
   onStartCreating,
   onOpenAbout,
@@ -99,6 +104,18 @@ export const BlogHome: React.FC<Props> = ({
           </div>
 
           <div className="flex items-center gap-2.5">
+            {onOpenScheduler && (
+              <button
+                onClick={onOpenScheduler}
+                className="px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow-xs transition flex items-center gap-1.5 cursor-pointer"
+                title="Régie quotidienne : 1 article automatique par jour & calendrier 30 jours"
+              >
+                <Calendar className="w-3.5 h-3.5" />
+                <span className="hidden md:inline">1 Post / Jour (Auto)</span>
+                <span className="md:hidden">1/Jour</span>
+              </button>
+            )}
+
             <button
               onClick={onOpenGenerator}
               className="px-3.5 py-1.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 text-xs font-extrabold rounded-xl shadow-xs transition flex items-center gap-1.5 cursor-pointer"
@@ -150,7 +167,7 @@ export const BlogHome: React.FC<Props> = ({
                 {featuredPost.intro.hook} {featuredPost.intro.background}
               </p>
 
-              <div className="flex flex-wrap items-center gap-4 pt-2">
+              <div className="flex flex-wrap items-center gap-3 pt-2">
                 <button
                   onClick={() => onSelectArticle(featuredPost)}
                   className="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs sm:text-sm font-bold rounded-xl shadow-lg transition flex items-center gap-2 cursor-pointer"
@@ -158,6 +175,18 @@ export const BlogHome: React.FC<Props> = ({
                   <span>Lire l'enquête complète (2 200+ mots)</span>
                   <ArrowRight className="w-4 h-4" />
                 </button>
+
+                {onOpenSocialKit && (
+                  <button
+                    onClick={() => onOpenSocialKit(featuredPost)}
+                    className="px-4 py-2.5 bg-white/10 hover:bg-white/20 text-white text-xs sm:text-sm font-semibold rounded-xl border border-white/20 transition flex items-center gap-1.5 cursor-pointer"
+                    title="Générer les posts pour attirer du trafic depuis LinkedIn et Twitter"
+                  >
+                    <Zap className="w-4 h-4 text-amber-400" />
+                    <span>Booster Trafic</span>
+                  </button>
+                )}
+
                 <span className="text-xs text-slate-400">
                   Par {featuredPost.author.name} • {featuredPost.publishDate}
                 </span>
@@ -333,13 +362,29 @@ export const BlogHome: React.FC<Props> = ({
 
                       {/* Footer meta */}
                       <div className="px-5 py-3.5 bg-slate-50 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-                        <span className="font-semibold text-slate-700 truncate max-w-[180px]">
+                        <span className="font-semibold text-slate-700 truncate max-w-[150px]">
                           {post.author.name}
                         </span>
-                        <span className="text-blue-600 font-bold group-hover:translate-x-0.5 transition flex items-center gap-1">
-                          Lire l'article
-                          <ChevronRight className="w-3.5 h-3.5" />
-                        </span>
+                        <div className="flex items-center gap-2">
+                          {onOpenSocialKit && (
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                onOpenSocialKit(post);
+                              }}
+                              className="px-2 py-1 rounded-lg bg-amber-100 hover:bg-amber-200 text-slate-950 font-bold transition cursor-pointer flex items-center gap-1 text-[10px]"
+                              title="Booster le trafic sur LinkedIn, X et WhatsApp"
+                            >
+                              <Zap className="w-3 h-3 text-amber-700" />
+                              <span className="hidden sm:inline">Boost</span>
+                            </button>
+                          )}
+                          <span className="text-blue-600 font-bold group-hover:translate-x-0.5 transition flex items-center gap-1">
+                            Lire
+                            <ChevronRight className="w-3.5 h-3.5" />
+                          </span>
+                        </div>
                       </div>
                     </article>
                   );
@@ -353,6 +398,38 @@ export const BlogHome: React.FC<Props> = ({
 
           {/* Right Column: Sidebar (4 cols) */}
           <div className="lg:col-span-4 space-y-6">
+            {/* Daily Automated Publication Card */}
+            {onOpenScheduler && (
+              <div className="bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white p-6 rounded-3xl shadow-xl space-y-3.5 border-2 border-white/20">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    <Calendar className="w-5 h-5 text-emerald-400" />
+                    <span className="text-[11px] font-black uppercase tracking-wider text-emerald-300">
+                      Régie Quotidienne Active
+                    </span>
+                  </div>
+                  <span className="text-[10px] font-bold bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full border border-emerald-400/30">
+                    1 Post / Jour
+                  </span>
+                </div>
+                <h3 className="text-base font-black leading-snug">
+                  Programme Automatisé & Calendrier 30 Jours
+                </h3>
+                <p className="text-xs text-slate-300 leading-relaxed">
+                  Votre blog s'alimente chaque jour d'un article SEO de 2000+ mots sur les tendances de l'emploi en France pour captiver les visiteurs et ranker sur Google.
+                </p>
+                <div className="pt-1 flex flex-col gap-2">
+                  <button
+                    onClick={onOpenScheduler}
+                    className="w-full py-2.5 bg-emerald-500 hover:bg-emerald-600 text-slate-950 text-xs font-bold rounded-xl shadow-md transition cursor-pointer flex items-center justify-center gap-2"
+                  >
+                    <Calendar className="w-4 h-4 text-slate-950" />
+                    <span>Gérer le Calendrier & Exporter RSS</span>
+                  </button>
+                </div>
+              </div>
+            )}
+
             {/* Daily Generator Card Banner */}
             <div className="bg-gradient-to-br from-amber-500 to-amber-600 text-slate-950 p-6 rounded-3xl shadow-lg space-y-3 border-2 border-white">
               <div className="flex items-center gap-2">

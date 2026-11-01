@@ -59,6 +59,26 @@ export interface ExternalSource {
   citationContext: string;
 }
 
+export interface SocialPostSnippets {
+  linkedin: string;
+  twitter: string;
+  newsletter: string;
+  whatsapp: string;
+}
+
+export interface ScheduledDailyTopic {
+  dayOffset: number; // 0 for today, 1 for tomorrow, etc.
+  dateString: string; // e.g. "2 Novembre 2026"
+  isoDate: string; // "2026-11-02"
+  title: string;
+  category: BlogCategoryId;
+  primaryKeyword: string;
+  secondaryKeywords: string[];
+  trendingReason: string;
+  estimatedSearchVolume: string;
+  targetAudience: string;
+}
+
 export interface BlogPost {
   id: string;
   slug: string;
@@ -79,8 +99,11 @@ export interface BlogPost {
   secondaryKeywords: string[];
   isFeatured?: boolean;
   isTrending?: boolean;
+  isDailyTopic?: boolean;
+  scheduledDate?: string;
   views: number;
   likes: number;
+  socialSnippets?: SocialPostSnippets;
   
   // SEO prompt structured content
   intro: {
@@ -101,3 +124,4 @@ export interface BlogPost {
     ctaButton: string;
   };
 }
+

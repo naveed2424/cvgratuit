@@ -15,6 +15,9 @@ import { AboutPage } from './components/AboutPage';
 import { BlogHome } from './components/Blog/BlogHome';
 import { ArticleDetail } from './components/Blog/ArticleDetail';
 import { DailyTopicGeneratorModal } from './components/Blog/DailyTopicGeneratorModal';
+import { DailySchedulerDashboard } from './components/Blog/DailySchedulerDashboard';
+import { SocialTrafficKitModal } from './components/Blog/SocialTrafficKitModal';
+import { checkAndAutoPublishDailyArticle } from './utils/dailyEngine';
 import { TermsPage } from './components/Legal/TermsPage';
 import { DisclaimerPage } from './components/Legal/DisclaimerPage';
 import { PrivacyPage } from './components/Legal/PrivacyPage';
@@ -166,13 +169,17 @@ export default function App() {
     return DEFAULT_RESUME_DATA;
   });
 
-  // Blog posts storage
+  // Blog posts storage with merge of all initial SEO articles
   const [blogPosts, setBlogPosts] = useState<BlogPost[]>(() => {
     try {
       const saved = localStorage.getItem(BLOG_STORAGE_KEY);
       if (saved) {
         const parsed = JSON.parse(saved);
-        if (Array.isArray(parsed) && parsed.length > 0) return parsed;
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          const ids = new Set(parsed.map((p: BlogPost) => p.id));
+          const missing = INITIAL_BLOG_POSTS.filter(p => !ids.has(p.id));
+          return [...missing, ...parsed];
+        }
       }
     } catch {}
     return INITIAL_BLOG_POSTS;
@@ -181,6 +188,16 @@ export default function App() {
   const [selectedArticle, setSelectedArticle] = useState<BlogPost>(blogPosts[0]);
   const [isAtsModalOpen, setIsAtsModalOpen] = useState(false);
   const [isGeneratorModalOpen, setIsGeneratorModalOpen] = useState(false);
+  const [isSchedulerOpen, setIsSchedulerOpen] = useState(false);
+  const [socialKitArticle, setSocialKitArticle] = useState<BlogPost | null>(null);
+
+  // Auto-publish today's daily article if not yet published
+  useEffect(() => {
+    const result = checkAndAutoPublishDailyArticle(blogPosts);
+    if (result.newPublishedArticle) {
+      setBlogPosts(result.updatedPosts);
+    }
+  }, []);
 
   // Auto-save resume data
   useEffect(() => {
@@ -274,6 +291,8 @@ export default function App() {
           posts={blogPosts}
           onSelectArticle={handleOpenArticle}
           onOpenGenerator={() => setIsGeneratorModalOpen(true)}
+          onOpenScheduler={() => setIsSchedulerOpen(true)}
+          onOpenSocialKit={(art) => setSocialKitArticle(art)}
           onBackToHome={() => setView('landing')}
           onStartCreating={() => setView('editor')}
           onOpenAbout={() => setView('about')}
@@ -288,6 +307,7 @@ export default function App() {
           allPosts={blogPosts}
           onBackToBlog={() => setView('blog')}
           onSelectArticle={handleOpenArticle}
+          onOpenSocialKit={(art) => setSocialKitArticle(art)}
           onStartCreating={() => setView('editor')}
           onOpenAbout={() => setView('about')}
           onOpenContact={() => setView('contact')}
@@ -365,6 +385,30 @@ export default function App() {
         onClose={() => setIsGeneratorModalOpen(false)}
         onPublishArticle={handlePublishNewArticle}
       />
+
+      {/* Daily Editorial Scheduler Dashboard */}
+      {isSchedulerOpen && (
+        <DailySchedulerDashboard
+          posts={blogPosts}
+          onSelectArticle={handleOpenArticle}
+          onPublishArticle={handlePublishNewArticle}
+          onOpenGenerator={() => {
+            setIsSchedulerOpen(false);
+            setIsGeneratorModalOpen(true);
+          }}
+          onOpenSocialKit={(art) => setSocialKitArticle(art)}
+          onClose={() => setIsSchedulerOpen(false)}
+        />
+      )}
+
+      {/* Viral Social Traffic Acquisition Kit Modal */}
+      {socialKitArticle && (
+        <SocialTrafficKitModal
+          isOpen={!!socialKitArticle}
+          onClose={() => setSocialKitArticle(null)}
+          article={socialKitArticle}
+        />
+      )}
     </div>
   );
 }

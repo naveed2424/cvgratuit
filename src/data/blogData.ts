@@ -1,6 +1,8 @@
 import { BlogCategory, BlogPost } from '../types/blog';
+import { ARTICLE_FAIRE_UN_CV_GRATUIT, ARTICLE_MODELES_CV_GRATUITS } from './seoFreeCvArticles';
 
 export const BLOG_CATEGORIES: BlogCategory[] = [
+
   {
     id: 'redaction-cv',
     slug: 'redaction-cv',
@@ -70,6 +72,8 @@ export const BLOG_CATEGORIES: BlogCategory[] = [
 ];
 
 export const INITIAL_BLOG_POSTS: BlogPost[] = [
+  ARTICLE_FAIRE_UN_CV_GRATUIT,
+  ARTICLE_MODELES_CV_GRATUITS,
   {
     id: 'art-1-tendances-ia-recrutement-2026',
     slug: 'ia-recrutement-cv-filtres-ats-2026',

@@ -15,6 +15,7 @@ interface Props {
   onBackToBlog: () => void;
   onSelectArticle: (article: BlogPost) => void;
   onStartCreating: () => void;
+  onOpenSocialKit?: (article: BlogPost) => void;
   onOpenAbout: () => void;
   onOpenContact: () => void;
   onOpenTerms: () => void;
@@ -28,6 +29,7 @@ export const ArticleDetail: React.FC<Props> = ({
   onBackToBlog,
   onSelectArticle,
   onStartCreating,
+  onOpenSocialKit,
   onOpenAbout,
   onOpenContact,
   onOpenTerms,
@@ -90,6 +92,17 @@ export const ArticleDetail: React.FC<Props> = ({
           </div>
 
           <div className="flex items-center gap-2.5">
+            {onOpenSocialKit && (
+              <button
+                onClick={() => onOpenSocialKit(article)}
+                className="px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-slate-950 text-xs font-black transition flex items-center gap-1.5 cursor-pointer shadow-xs"
+                title="Générer les posts LinkedIn, Twitter et Newsletter pour attirer des visiteurs"
+              >
+                <Sparkles className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline">Booster le Trafic</span>
+              </button>
+            )}
+
             <button
               onClick={handleShare}
               className="px-3 py-1.5 rounded-xl border border-slate-300 bg-white hover:bg-slate-50 text-xs font-semibold text-slate-700 transition flex items-center gap-1.5 cursor-pointer shadow-2xs"
