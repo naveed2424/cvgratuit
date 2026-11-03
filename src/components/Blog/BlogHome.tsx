@@ -279,6 +279,90 @@ export const BlogHome: React.FC<Props> = ({
         </div>
       </section>
 
+      {/* Featured Master Guides Banner (CV Creation & French Job Market Focus) */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full mb-8">
+        <div className="bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 rounded-3xl p-6 sm:p-8 text-white shadow-xl border-2 border-white/20 space-y-5">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div className="space-y-1">
+              <span className="text-[10px] font-black uppercase tracking-wider text-amber-300 bg-amber-400/20 px-2.5 py-0.5 rounded-full border border-amber-300/30">
+                Dossiers Spéciaux 2026 • 100% Conformes &amp; Gratuits
+              </span>
+              <h2 className="text-lg sm:text-xl font-black">
+                Guides Phares : Création de CV &amp; Marché du Travail en France
+              </h2>
+            </div>
+            <span className="text-xs text-blue-200">
+              Enquêtes approfondies (2 500+ mots) &amp; Données officielles Dares / Apec
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {[
+              {
+                id: 'art-seo-faire-un-cv-gratuit-en-ligne-2026',
+                tag: 'Anti-Arnaque',
+                tagColor: 'bg-emerald-500/20 text-emerald-300 border-emerald-400/30',
+                title: 'Faire un CV Gratuit sans Abonnement',
+                subtitle: 'Comment déjouer les prélèvements cachés et exporter en vrai PDF.',
+                badge: '120k rech/mois',
+              },
+              {
+                id: 'art-seo-modeles-cv-gratuits-telecharger-2026',
+                tag: 'Design &amp; ATS',
+                tagColor: 'bg-blue-500/20 text-blue-300 border-blue-400/30',
+                title: 'Modèles de CV Gratuits Validés 2026',
+                subtitle: '10 formats A4 sobres et élégants plébiscités par les recruteurs.',
+                badge: '85k rech/mois',
+              },
+              {
+                id: 'art-seo-creer-un-cv-parfait-guide-2026',
+                tag: 'Méthode Pratique',
+                tagColor: 'bg-purple-500/20 text-purple-300 border-purple-400/30',
+                title: 'Créer un CV Parfait (Guide Débutants)',
+                subtitle: 'Verbes d\'action, structure et astuces pour étudiants & reconversion.',
+                badge: '160k rech/mois',
+              },
+              {
+                id: 'art-seo-marche-emploi-france-dares-apec-2026',
+                tag: 'Enquête Emploi',
+                tagColor: 'bg-amber-500/20 text-amber-300 border-amber-400/30',
+                title: 'Le Marché de l\'Emploi en France 2026',
+                subtitle: 'Métiers qui recrutent le plus, salaires réels et tensions Dares.',
+                badge: 'Données Dares',
+              },
+            ].map((guide, gIdx) => {
+              const matchedPost = posts.find(p => p.id === guide.id);
+              return (
+                <div
+                  key={gIdx}
+                  onClick={() => matchedPost && onSelectArticle(matchedPost)}
+                  className="p-4 rounded-2xl bg-white/10 hover:bg-white/15 border border-white/15 transition cursor-pointer flex flex-col justify-between group space-y-2.5 backdrop-blur-xs"
+                >
+                  <div className="space-y-1.5">
+                    <div className="flex items-center justify-between text-[10px]">
+                      <span className={`px-2 py-0.5 rounded-full font-bold border ${guide.tagColor}`}>
+                        {guide.tag}
+                      </span>
+                      <span className="text-slate-300 font-medium">{guide.badge}</span>
+                    </div>
+                    <h3 className="text-sm font-bold text-white group-hover:text-amber-300 transition line-clamp-2">
+                      {guide.title}
+                    </h3>
+                    <p className="text-[11px] text-slate-300 line-clamp-2 leading-relaxed">
+                      {guide.subtitle}
+                    </p>
+                  </div>
+                  <div className="pt-2 border-t border-white/10 flex items-center justify-between text-[11px] text-amber-300 font-semibold">
+                    <span>Lire le guide complet</span>
+                    <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition" />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
       {/* Main Articles Grid + Sidebar */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex-1 pb-16">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
