@@ -1,6 +1,7 @@
 import { BlogCategory, BlogPost } from '../types/blog';
 import { ARTICLE_FAIRE_UN_CV_GRATUIT, ARTICLE_MODELES_CV_GRATUITS } from './seoFreeCvArticles';
 import { ARTICLE_CREER_UN_CV, ARTICLE_MARCHE_EMPLOI_FRANCE } from './seoFrenchJobArticles';
+import { ARTICLE_AVANTAGES_BON_CV, ARTICLE_CONDITIONS_TRAVAIL_FRANCE } from './seoWorkAdvantageArticles';
 
 export const BLOG_CATEGORIES: BlogCategory[] = [
 
@@ -73,6 +74,8 @@ export const BLOG_CATEGORIES: BlogCategory[] = [
 ];
 
 export const INITIAL_BLOG_POSTS: BlogPost[] = [
+  ARTICLE_AVANTAGES_BON_CV,
+  ARTICLE_CONDITIONS_TRAVAIL_FRANCE,
   ARTICLE_FAIRE_UN_CV_GRATUIT,
   ARTICLE_MODELES_CV_GRATUITS,
   ARTICLE_CREER_UN_CV,

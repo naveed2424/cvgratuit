@@ -104,33 +104,12 @@ export const BlogHome: React.FC<Props> = ({
           </div>
 
           <div className="flex items-center gap-2.5">
-            {onOpenScheduler && (
-              <button
-                onClick={onOpenScheduler}
-                className="px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold rounded-xl shadow-xs transition flex items-center gap-1.5 cursor-pointer"
-                title="Régie quotidienne : 1 article automatique par jour & calendrier 30 jours"
-              >
-                <Calendar className="w-3.5 h-3.5" />
-                <span className="hidden md:inline">1 Post / Jour (Auto)</span>
-                <span className="md:hidden">1/Jour</span>
-              </button>
-            )}
-
-            <button
-              onClick={onOpenGenerator}
-              className="px-3.5 py-1.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 text-xs font-extrabold rounded-xl shadow-xs transition flex items-center gap-1.5 cursor-pointer"
-              title="Générer un article SEO sur la tendance du jour"
-            >
-              <Sparkles className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">Rédacteur IA Quotidien</span>
-              <span className="sm:hidden">Rédacteur IA</span>
-            </button>
-
             <button
               onClick={onStartCreating}
-              className="px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl shadow-md transition cursor-pointer"
+              className="px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl shadow-md transition cursor-pointer flex items-center gap-1.5"
             >
-              Créer mon CV
+              <FileText className="w-3.5 h-3.5" />
+              <span>Créer mon CV Gratuit</span>
             </button>
           </div>
         </div>
@@ -288,27 +267,43 @@ export const BlogHome: React.FC<Props> = ({
                 Dossiers Spéciaux 2026 • 100% Conformes &amp; Gratuits
               </span>
               <h2 className="text-lg sm:text-xl font-black">
-                Guides Phares : Création de CV &amp; Marché du Travail en France
+                Guides Phares : Création de CV, Avantages Salaires &amp; Conditions de Travail en France
               </h2>
             </div>
             <span className="text-xs text-blue-200">
-              Enquêtes approfondies (2 500+ mots) &amp; Données officielles Dares / Apec
+              Enquêtes approfondies (2 500+ mots) &amp; Données officielles Dares / Insee / Apec
             </span>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {[
+              {
+                id: 'art-seo-avantages-bon-cv-recrutement-salaire-2026',
+                tag: 'Carrière & Salaire',
+                tagColor: 'bg-emerald-500/20 text-emerald-300 border-emerald-400/30',
+                title: 'Les 7 Avantages d\'un Bon CV en 2026',
+                subtitle: 'Multipliez vos entretiens par 4 et augmentez votre salaire de départ de 18%.',
+                badge: 'Négociation RH',
+              },
+              {
+                id: 'art-seo-conditions-travail-france-droits-salaires-2026',
+                tag: 'Droits Salariés',
+                tagColor: 'bg-cyan-500/20 text-cyan-300 border-cyan-400/30',
+                title: 'Conditions de Travail en France 2026',
+                subtitle: '35 heures, RTT, congés payés, télétravail encadré et avantages sociaux.',
+                badge: 'Code du Travail',
+              },
               {
                 id: 'art-seo-faire-un-cv-gratuit-en-ligne-2026',
                 tag: 'Anti-Arnaque',
-                tagColor: 'bg-emerald-500/20 text-emerald-300 border-emerald-400/30',
+                tagColor: 'bg-rose-500/20 text-rose-300 border-rose-400/30',
                 title: 'Faire un CV Gratuit sans Abonnement',
                 subtitle: 'Comment déjouer les prélèvements cachés et exporter en vrai PDF.',
                 badge: '120k rech/mois',
               },
               {
                 id: 'art-seo-modeles-cv-gratuits-telecharger-2026',
-                tag: 'Design &amp; ATS',
+                tag: 'Design & ATS',
                 tagColor: 'bg-blue-500/20 text-blue-300 border-blue-400/30',
                 title: 'Modèles de CV Gratuits Validés 2026',
                 subtitle: '10 formats A4 sobres et élégants plébiscités par les recruteurs.',
@@ -318,8 +313,8 @@ export const BlogHome: React.FC<Props> = ({
                 id: 'art-seo-creer-un-cv-parfait-guide-2026',
                 tag: 'Méthode Pratique',
                 tagColor: 'bg-purple-500/20 text-purple-300 border-purple-400/30',
-                title: 'Créer un CV Parfait (Guide Débutants)',
-                subtitle: 'Verbes d\'action, structure et astuces pour étudiants & reconversion.',
+                title: 'Créer un CV Parfait (Débutants & Reconversion)',
+                subtitle: 'Verbes d\'action, structure et astuces pour valoriser son parcours.',
                 badge: '160k rech/mois',
               },
               {
@@ -482,58 +477,51 @@ export const BlogHome: React.FC<Props> = ({
 
           {/* Right Column: Sidebar (4 cols) */}
           <div className="lg:col-span-4 space-y-6">
-            {/* Daily Automated Publication Card */}
-            {onOpenScheduler && (
-              <div className="bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 text-white p-6 rounded-3xl shadow-xl space-y-3.5 border-2 border-white/20">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-2">
-                    <Calendar className="w-5 h-5 text-emerald-400" />
-                    <span className="text-[11px] font-black uppercase tracking-wider text-emerald-300">
-                      Régie Quotidienne Active
-                    </span>
-                  </div>
-                  <span className="text-[10px] font-bold bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full border border-emerald-400/30">
-                    1 Post / Jour
+            {/* Free CV Generator Action Card */}
+            <div className="bg-gradient-to-br from-blue-700 via-indigo-700 to-blue-800 text-white p-6 rounded-3xl shadow-xl space-y-3.5 border-2 border-white/20">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <FileText className="w-5 h-5 text-amber-300" />
+                  <span className="text-[11px] font-black uppercase tracking-wider text-amber-300">
+                    Outil Gratuit en Ligne
                   </span>
                 </div>
-                <h3 className="text-base font-black leading-snug">
-                  Programme Automatisé & Calendrier 30 Jours
-                </h3>
-                <p className="text-xs text-slate-300 leading-relaxed">
-                  Votre blog s'alimente chaque jour d'un article SEO de 2000+ mots sur les tendances de l'emploi en France pour captiver les visiteurs et ranker sur Google.
-                </p>
-                <div className="pt-1 flex flex-col gap-2">
-                  <button
-                    onClick={onOpenScheduler}
-                    className="w-full py-2.5 bg-emerald-500 hover:bg-emerald-600 text-slate-950 text-xs font-bold rounded-xl shadow-md transition cursor-pointer flex items-center justify-center gap-2"
-                  >
-                    <Calendar className="w-4 h-4 text-slate-950" />
-                    <span>Gérer le Calendrier & Exporter RSS</span>
-                  </button>
-                </div>
-              </div>
-            )}
-
-            {/* Daily Generator Card Banner */}
-            <div className="bg-gradient-to-br from-amber-500 to-amber-600 text-slate-950 p-6 rounded-3xl shadow-lg space-y-3 border-2 border-white">
-              <div className="flex items-center gap-2">
-                <Sparkles className="w-5 h-5 text-slate-950" />
-                <span className="text-xs font-black uppercase tracking-wider">
-                  Rédacteur IA Quotidien
+                <span className="text-[10px] font-bold bg-amber-400 text-slate-950 px-2.5 py-0.5 rounded-full">
+                  100% Gratuit
                 </span>
               </div>
-              <h3 className="text-lg font-black leading-snug">
-                Besoin d'un article sur la tendance du jour ?
+              <h3 className="text-base font-black leading-snug">
+                Créez Votre CV Professionnel Conforme ATS
               </h3>
-              <p className="text-xs text-slate-900 font-medium leading-relaxed">
-                Cliquez pour activer le prompt <code>{'{Write today\'s best and trending topic}'}</code> et publier un article complet de 2000+ mots avec 4 images et SEO aux normes.
+              <p className="text-xs text-blue-100 leading-relaxed">
+                Modèles français A4 validés par des recruteurs. Téléchargement PDF immédiat sans carte bancaire et sans abonnement caché.
               </p>
               <button
-                onClick={onOpenGenerator}
-                className="w-full py-2.5 bg-slate-950 hover:bg-slate-900 text-amber-300 text-xs font-bold rounded-xl shadow-md transition cursor-pointer flex items-center justify-center gap-2"
+                onClick={onStartCreating}
+                className="w-full py-2.5 bg-amber-400 hover:bg-amber-300 text-slate-950 text-xs font-bold rounded-xl shadow-md transition cursor-pointer flex items-center justify-center gap-2"
               >
-                <Sparkles className="w-4 h-4 text-amber-400" />
-                <span>Ouvrir le Rédacteur IA</span>
+                <span>Faire mon CV Gratuit</span>
+                <ArrowRight className="w-4 h-4 text-slate-950" />
+              </button>
+            </div>
+
+            {/* Free ATS Audit CTA Card */}
+            <div className="bg-white p-5 rounded-3xl border-2 border-white ring-1 ring-amber-300/40 shadow-md space-y-3">
+              <div className="flex items-center gap-2">
+                <ShieldCheck className="w-5 h-5 text-emerald-600" />
+                <span className="text-xs font-bold text-slate-900">
+                  Votre CV passe-t-il les robots ?
+                </span>
+              </div>
+              <p className="text-xs text-slate-600 leading-relaxed">
+                78% des CV sont rejetés par les logiciels de tri ATS en moins de 6 secondes. Vérifiez la lisibilité de votre fichier avant d'envoyer votre candidature.
+              </p>
+              <button
+                onClick={onStartCreating}
+                className="w-full py-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 text-xs font-bold rounded-xl transition cursor-pointer flex items-center justify-center gap-1.5"
+              >
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
+                <span>Tester mon CV avec l'outil gratuit</span>
               </button>
             </div>
 
@@ -672,7 +660,9 @@ export const BlogHome: React.FC<Props> = ({
                 <li><button onClick={onStartCreating} className="hover:text-white transition">Créateur de CV en Ligne</button></li>
                 <li><button onClick={onStartCreating} className="hover:text-white transition">Générateur de Lettre de Motivation</button></li>
                 <li><button onClick={onBackToHome} className="hover:text-white transition">Vérificateur de score ATS</button></li>
-                <li><button onClick={onOpenGenerator} className="hover:text-white transition text-amber-300 font-bold">Rédacteur IA Quotidien</button></li>
+                {onOpenScheduler && (
+                  <li><button onClick={onOpenScheduler} className="hover:text-slate-300 transition text-[11px] text-slate-500">Administration &amp; Régie Éditoriale</button></li>
+                )}
               </ul>
             </div>
 

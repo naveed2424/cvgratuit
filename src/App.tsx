@@ -160,7 +160,7 @@ export type AppView =
   | 'contact';
 
 export default function App() {
-  const [view, setView] = useState<AppView>('blog'); // Default to blog as requested
+  const [view, setView] = useState<AppView>('landing'); // Default to home landing page
   const [resumeData, setResumeData] = useState<ResumeData>(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
