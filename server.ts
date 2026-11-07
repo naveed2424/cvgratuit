@@ -247,6 +247,12 @@ function getFrenchFallback(type?: string, jobTitle?: string, currentText?: strin
   return `Suggestions professionnelles validées par nos recruteurs pour ${job}.`;
 }
 
+// Google AdSense ads.txt official publisher route
+app.get('/ads.txt', (_req, res) => {
+  res.setHeader('Content-Type', 'text/plain; charset=utf-8');
+  res.status(200).send('google.com, pub-8358033803354457, DIRECT, f08c47fec0942fa0\n');
+});
+
 // Explicit endpoints for Google Search Console verification file
 app.get('/googleAI5M8f3ekFXNXe6T0f9eKCjkJJY9777CITc5Sn0MQwg.html', (_req, res) => {
   res.setHeader('Content-Type', 'text/html; charset=utf-8');

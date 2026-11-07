@@ -10,7 +10,7 @@ interface AdSenseSlotProps {
 export const AdSenseSlot: React.FC<AdSenseSlotProps> = ({
   slotType,
   className = '',
-  adClient = 'ca-pub-demo-adsense',
+  adClient = 'ca-pub-8358033803354457',
   adSlotId = '1234567890',
 }) => {
   if (slotType === 'leaderboard') {
