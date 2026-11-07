@@ -8,8 +8,10 @@ import {
 import { 
   Calendar, Sparkles, CheckCircle2, Clock, 
   TrendingUp, ArrowRight, Share2, FileText, 
-  Zap, Search, RefreshCw, Layers, Bell, Download
+  Zap, Search, RefreshCw, Layers, Bell, Download,
+  Copy, ShieldCheck, Check
 } from 'lucide-react';
+import { REGISTERED_MASTER_PROMPT, MASTER_PROMPT_METADATA } from '../../data/masterPrompt';
 
 interface Props {
   posts: BlogPost[];
@@ -30,6 +32,8 @@ export const DailySchedulerDashboard: React.FC<Props> = ({
 }) => {
   const [publishingOffset, setPublishingOffset] = useState<number | null>(null);
   const [downloadSuccess, setDownloadSuccess] = useState<string | null>(null);
+  const [showMasterPrompt, setShowMasterPrompt] = useState(false);
+  const [copiedPrompt, setCopiedPrompt] = useState(false);
 
   const todayStr = getFrenchDateString(new Date());
   const todayPost = posts.find(p => p.publishDate === todayStr || p.publishDate === "Aujourd'hui") || posts[0];
@@ -166,7 +170,16 @@ export const DailySchedulerDashboard: React.FC<Props> = ({
                 Chaque visiteur arrivant sur le site découvre le nouvel article du jour optimisé pour Google AdSense, avec 4 images et balises ALT SEO.
               </p>
             </div>
-            <div className="flex items-center gap-2 shrink-0">
+            <div className="flex flex-wrap items-center gap-2 shrink-0">
+              <button
+                type="button"
+                onClick={() => setShowMasterPrompt(true)}
+                className="px-3.5 py-2 bg-white hover:bg-slate-50 border border-slate-300 text-slate-800 rounded-xl text-xs font-bold transition flex items-center gap-1.5 shadow-2xs cursor-pointer"
+              >
+                <ShieldCheck className="w-4 h-4 text-emerald-600" />
+                <span>Master Prompt Enregistré</span>
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+              </button>
               <button
                 type="button"
                 onClick={onOpenGenerator}
@@ -395,6 +408,111 @@ export const DailySchedulerDashboard: React.FC<Props> = ({
           </button>
         </div>
       </div>
+
+      {/* Master Prompt Registered Inspector Modal */}
+      {showMasterPrompt && (
+        <div className="fixed inset-0 z-60 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-3 sm:p-6">
+          <div className="relative w-full max-w-4xl bg-white rounded-3xl shadow-2xl border-2 border-white ring-1 ring-blue-500/30 overflow-hidden flex flex-col max-h-[88vh]">
+            <div className="px-6 py-4 bg-gradient-to-r from-slate-900 via-blue-950 to-indigo-950 text-white flex items-center justify-between shrink-0">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-xl bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center text-emerald-400">
+                  <ShieldCheck className="w-6 h-6" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2">
+                    <h3 className="text-base font-bold text-white">Master Prompt Enregistré (Actif)</h3>
+                    <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-emerald-400 text-slate-950">
+                      VERSION {MASTER_PROMPT_METADATA.version}
+                    </span>
+                  </div>
+                  <p className="text-xs text-slate-300">
+                    Cadre éditorial permanent pour la rédaction et la génération de tous les articles du site.
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => {
+                    navigator.clipboard.writeText(REGISTERED_MASTER_PROMPT);
+                    setCopiedPrompt(true);
+                    setTimeout(() => setCopiedPrompt(false), 2500);
+                  }}
+                  className="px-3.5 py-1.5 rounded-xl bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold transition flex items-center gap-1.5 cursor-pointer shadow-sm"
+                >
+                  {copiedPrompt ? (
+                    <>
+                      <Check className="w-3.5 h-3.5 text-emerald-300" />
+                      <span>Copié dans le presse-papier !</span>
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-3.5 h-3.5" />
+                      <span>Copier le Master Prompt</span>
+                    </>
+                  )}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setShowMasterPrompt(false)}
+                  className="px-3 py-1.5 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-semibold cursor-pointer"
+                >
+                  Fermer
+                </button>
+              </div>
+            </div>
+
+            <div className="p-6 overflow-y-auto flex-1 space-y-4">
+              {/* Metadata Badges */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+                <div className="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-0.5">
+                  <span className="text-[10px] font-bold uppercase text-slate-400">Statut</span>
+                  <p className="font-bold text-emerald-700 flex items-center gap-1">
+                    <CheckCircle2 className="w-3.5 h-3.5" />
+                    ACTIF & ENREGISTRÉ
+                  </p>
+                </div>
+                <div className="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-0.5">
+                  <span className="text-[10px] font-bold uppercase text-slate-400">Volume Requis</span>
+                  <p className="font-bold text-slate-900">{MASTER_PROMPT_METADATA.minWordCount}+ mots / article</p>
+                </div>
+                <div className="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-0.5">
+                  <span className="text-[10px] font-bold uppercase text-slate-400">Images Obligatoires</span>
+                  <p className="font-bold text-slate-900">{MASTER_PROMPT_METADATA.requiredImages} (1 Hero + 4 In-Content)</p>
+                </div>
+                <div className="p-3 bg-slate-50 border border-slate-200 rounded-xl space-y-0.5">
+                  <span className="text-[10px] font-bold uppercase text-slate-400">Langue</span>
+                  <p className="font-bold text-slate-900">{MASTER_PROMPT_METADATA.language}</p>
+                </div>
+              </div>
+
+              {/* Master Prompt Content Viewer */}
+              <div className="space-y-2">
+                <span className="text-xs font-bold text-slate-700 flex items-center justify-between">
+                  <span>Texte Officiel du Master Prompt :</span>
+                  <span className="text-[11px] text-slate-500 font-normal">Utilisé par l'IA et le planificateur quotidien</span>
+                </span>
+                <pre className="p-4 bg-slate-900 text-slate-100 rounded-2xl text-xs font-mono leading-relaxed whitespace-pre-wrap overflow-x-auto max-h-[46vh] border border-slate-800 selection:bg-blue-600">
+                  {REGISTERED_MASTER_PROMPT}
+                </pre>
+              </div>
+            </div>
+
+            <div className="px-6 py-3.5 bg-slate-50 border-t border-slate-200 flex items-center justify-between shrink-0">
+              <span className="text-xs text-slate-500">
+                Tous les prochains articles créés ou générés appliqueront strictement ce protocole SEO & AdSense.
+              </span>
+              <button
+                type="button"
+                onClick={() => setShowMasterPrompt(false)}
+                className="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold rounded-xl transition cursor-pointer"
+              >
+                Compris
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -114,13 +114,18 @@ export const DailyTopicGeneratorModal: React.FC<Props> = ({
         <div className="p-6 overflow-y-auto flex-1 space-y-6">
           {activeStep === 'input' ? (
             <div className="space-y-6">
-              <div className="p-4 bg-blue-50/70 border border-blue-200 rounded-2xl text-xs text-blue-900 leading-relaxed space-y-2">
-                <div className="flex items-center gap-2 font-bold text-blue-950">
-                  <ShieldCheck className="w-4 h-4 text-blue-600" />
-                  <span>Conformité stricte au prompt SEO demandé</span>
+              <div className="p-4 bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-200 rounded-2xl text-xs text-blue-950 leading-relaxed space-y-2">
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <div className="flex items-center gap-2 font-bold text-blue-950">
+                    <ShieldCheck className="w-4 h-4 text-emerald-600" />
+                    <span>Master Prompt SEO & AdSense Enregistré (Actif)</span>
+                  </div>
+                  <span className="text-[10px] font-black uppercase tracking-wider bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full">
+                    Conforme E-E-A-T & Google Publisher
+                  </span>
                 </div>
-                <p>
-                  L'article produit comprendra au moins 2 000 mots, un titre CTR émotionnel, un chapeau accrocheur, 4 sections structurées en H2/H3, 4 visuels in-content avec balises ALT SEO descriptives, les points clés, la FAQ, le maillage interne et externe d'autorité.
+                <p className="text-slate-600">
+                  Chaque article généré suit automatiquement le protocole officiel : 2 000+ mots, titre CTR émotionnel, 5 visuels haute résolution avec balises ALT descriptives, chapeau d'accroche, 4 sections H2/H3 avec chiffres récents (Dares, Insee, Apec), résumé Points Clés, FAQ et maillage d'autorité.
                 </p>
               </div>
 

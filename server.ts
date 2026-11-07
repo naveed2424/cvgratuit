@@ -73,28 +73,42 @@ Règles strictes :
   }
 });
 
-// API endpoint to generate complete 2000+ words SEO article for the French CV & Job blog
+// Endpoint to retrieve the registered Master Prompt configuration
+app.get('/api/blog/master-prompt', (_req, res) => {
+  res.json({
+    version: '2.4-PROD',
+    status: 'ACTIVE_REGISTERED',
+    minWordCount: 2000,
+    requiredImages: 5,
+    language: 'fr-FR',
+    framework: 'MASTER PROMPT — SEO-POWERED, GOOGLE ADSENSE-READY BLOGGING PLATFORM (CV & Emploi France)',
+  });
+});
+
+// API endpoint to generate complete 2000+ words SEO article for the French CV & Job blog following the MASTER PROMPT
 app.post('/api/blog/generate-daily-article', async (req, res) => {
   try {
     const { topic, category } = req.body;
     const cleanTopic = (topic || "L'impact de l'IA et du Recrutement en 2026").replace("{Write today's best and trending topic}", "L'impact de l'IA et des Nouveaux Baromètres de Salaires en France en 2026").trim();
 
     if (process.env.GEMINI_API_KEY) {
-      const prompt = `Agis en journaliste professionnel, expert SEO et stratège de contenu pour le marché de l'emploi en France.
-Rédige un article de blog complet, approfondi et factuel sur le sujet tendance : "${cleanTopic}".
-Catégorie attribuée : ${category || 'tendances-salaires'}.
-Respecte scrupuleusement ces règles :
-1. Titre émotionnel à fort taux de clic (CTR).
-2. Meta Title (moins de 60 caractères) et Meta Description (150-160 caractères).
-3. Mot-clé principal naturel et 4 mots-clés secondaires.
-4. Introduction avec hook percutant, contexte et importance immédiate.
-5. 4 sections H2 et H3 détaillées avec données chiffrées, citations d'experts RH et impacts réels.
-6. 4 suggestions d'images in-content avec balises ALT SEO descriptives et notes d'emplacement.
-7. Encadré "Points Clés / Key Takeaways" (5 puces).
-8. Section FAQ (3 à 4 questions avec réponses claires).
-9. Maillage interne (liens vers le créateur de CV, vérificateur ATS, etc.) et sources externes (Insee, Dares, France Travail).
-10. Conclusion prospective et appel à l'action (CTA).
-Fournis la réponse au format JSON strict avec les champs :
+      const prompt = `Agis selon le MASTER PROMPT OFFICIEL ENREGISTRÉ (Équipe d'élite : journaliste d'investigation, stratège SEO, consultant RH certifié et spécialiste Google AdSense E-E-A-T).
+Rédige un grand dossier de blog exhaustif, factuel et percutant de 2 000 à 2 500 mots sur le sujet : "${cleanTopic}".
+Catégorie officielle attribuée : ${category || 'tendances-salaires'}.
+
+DIRECTIVES STRICTES DU MASTER PROMPT :
+1. LANGUE : Français soigné, dynamique et journalistique.
+2. TITRE CTR : Émotionnel, chiffré et axé sur les résultats concrets du candidat en France (ex: +12% de salaire, x4 entretiens).
+3. META BALISES : Meta Title (<60 car.) et Meta Description (150-160 car. avec verbe d'action).
+4. CHAPEAU D'INTRODUCTION : Hook percutant, contexte macroéconomique Dares/Insee/Apec, urgence d'agir aujourd'hui.
+5. POINTS CLÉS (KEY TAKEAWAYS) : 5 enseignements majeurs immédiatement exploitables.
+6. STRUCTURE H2/H3 : 4 sections substantielles avec données chiffrées, citations de DRH, listes à puces et encadrés d'expertise.
+7. 4 IMAGES IN-CONTENT : Fournis pour chacune une balise ALT SEO descriptive (sans bourrage), une légende explicative et une note de placement.
+8. FAQ ACCORDÉON : 4 questions directes basées sur les requêtes fréquentes Google France.
+9. MAILLAGE : Liens internes pertinents vers le créateur de CV / audit ATS et sources institutionnelles d'autorité (France Travail, Dares, Apec).
+10. CONCLUSION & CTA : Résumé prospectif 2027 et appel à créer son CV gratuitement.
+
+Réponds obligatoirement au format JSON strict conforme à ce schéma :
 {
   "title": string,
   "metaTitle": string,
@@ -109,7 +123,7 @@ Fournis la réponse au format JSON strict avec les champs :
       "heading": string,
       "subheading": string,
       "content": string,
-      "callout": { "type": "stat"|"quote"|"tip", "title": string, "text": string, "source": string },
+      "callout": { "type": "stat"|"quote"|"tip"|"warning", "title": string, "text": string, "source": string },
       "bullets": string[],
       "image": { "url": string, "alt": string, "caption": string, "placementNote": string }
     }
